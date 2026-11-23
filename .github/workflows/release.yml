@@ -1,6 +1,6 @@
 # Publishes a GitHub release when a version tag is pushed (git tag v1.0.0 && git push origin v1.0.0).
-# The release gets the files of dist/ (standalone JAR, 8 extension JARs, API JAR) and the licence; attach the
-# documentation PDF by hand afterwards.
+# The release gets the files of dist/ (standalone JAR, 8 extension JARs, API JAR, organised zip with README,
+# licence and documentation) and the documentation PDF.
 name: Release
 
 on:
@@ -30,4 +30,5 @@ jobs:
           generate_release_notes: true
           files: |
             dist/*.jar
-            LICENSE
+            dist/*.zip
+            docs/*.pdf

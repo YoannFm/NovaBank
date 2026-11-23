@@ -174,6 +174,42 @@
                                 </copy>
                                 <copy file="${project.basedir}/../novabank-api/target/novabank-api-${file.version}.jar"
                                       todir="${dist}" overwrite="true"/>
+
+                                <!-- Archive a telecharger (SpigotMC, BuiltByBit...) : JAR ranges par usage, README,
+                                     licence et documentation PDF (docs/, absente = archive sans PDF). -->
+                                <property name="pkg" value="NovaBank-${file.version}"/>
+                                <copy file="${project.basedir}/src/package/README.txt" tofile="${work}/README.txt"
+                                      overwrite="true">
+                                    <filterset>
+                                        <filter token="VERSION" value="${project.version}"/>
+                                        <filter token="FILE_VERSION" value="${file.version}"/>
+                                    </filterset>
+                                </copy>
+                                <zip destfile="${dist}/NovaBank-${file.version}.zip">
+                                    <zipfileset file="${work}/README.txt" prefix="${pkg}"/>
+                                    <zipfileset file="${project.basedir}/../LICENSE" prefix="${pkg}"/>
+                                    <zipfileset dir="${project.basedir}/../docs" includes="*.pdf" prefix="${pkg}"/>
+                                    <zipfileset file="${base.jar}" prefix="${pkg}/Standalone"/>
+                                    <zipfileset dir="${out}" includes="NovaBank-SuperiorSkyblock2-${file.version}.jar"
+                                                prefix="${pkg}/Extensions/SuperiorSkyblock2"/>
+                                    <zipfileset dir="${out}" includes="NovaBank-BentoBox-${file.version}.jar"
+                                                prefix="${pkg}/Extensions/BentoBox"/>
+                                    <zipfileset dir="${out}" includes="NovaBank-IridiumSkyblock-${file.version}.jar"
+                                                prefix="${pkg}/Extensions/IridiumSkyblock"/>
+                                    <zipfileset dir="${out}" includes="NovaBank-Towny-${file.version}.jar"
+                                                prefix="${pkg}/Extensions/Towny"/>
+                                    <zipfileset dir="${out}" includes="NovaBank-SimpleClans-${file.version}.jar"
+                                                prefix="${pkg}/Extensions/SimpleClans"/>
+                                    <zipfileset dir="${out}" includes="NovaBank-Lands-${file.version}.jar"
+                                                prefix="${pkg}/Extensions/Lands"/>
+                                    <zipfileset dir="${out}" includes="NovaBank-GriefPrevention-${file.version}.jar"
+                                                prefix="${pkg}/Extensions/GriefPrevention"/>
+                                    <zipfileset dir="${out}" includes="NovaBank-WorldGuard-${file.version}.jar"
+                                                prefix="${pkg}/Extensions/WorldGuard"/>
+                                    <zipfileset
+                                            file="${project.basedir}/../novabank-api/target/novabank-api-${file.version}.jar"
+                                            prefix="${pkg}/API"/>
+                                </zip>
                             </target>
                         </configuration>
                     </execution>
