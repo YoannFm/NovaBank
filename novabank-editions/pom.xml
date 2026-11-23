@@ -185,7 +185,9 @@
                                         <filter token="FILE_VERSION" value="${file.version}"/>
                                     </filterset>
                                 </copy>
-                                <zip destfile="${dist}/NovaBank-${file.version}-EXTRACT-ME.zip">
+                                <!-- Nom fixe : le lien https://github.com/YoannFm/NovaBank/releases/latest/download/NovaBank-EXTRACT-ME.zip
+                                     reste valable a chaque version ; la version est dans le dossier de l'archive. -->
+                                <zip destfile="${dist}/NovaBank-EXTRACT-ME.zip">
                                     <zipfileset file="${work}/1 - READ ME FIRST - LISEZ-MOI.txt" prefix="${pkg}"/>
                                     <zipfileset file="${project.basedir}/../LICENSE" prefix="${pkg}"/>
                                     <zipfileset dir="${project.basedir}/../docs" includes="*.pdf" prefix="${pkg}"/>

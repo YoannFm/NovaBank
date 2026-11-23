@@ -40,7 +40,8 @@ Paper, Spigot and Folia, **Minecraft 1.17 to 26.x** (Java 17 bytecode). Your ser
 
 Each [release](https://github.com/YoannFm/NovaBank/releases) provides:
 
-- `NovaBank-<version>-EXTRACT-ME.zip`: **everything in one download** (extract it first), sorted by use (standalone plugin, one folder per
+- `NovaBank-EXTRACT-ME.zip`: **everything in one download** (extract it first; the latest one is always at
+  <https://github.com/YoannFm/NovaBank/releases/latest/download/NovaBank-EXTRACT-ME.zip>), sorted by use (standalone plugin, one folder per
   host extension, API), with a README explaining which file to install, the licence and the documentation;
 - `NovaBank-<version>.jar`: the standalone plugin, to drop into `plugins/`;
 - `NovaBank-<Host>-<version>.jar`: the same plugin packaged as an extension of one host plugin (SuperiorSkyblock2
@@ -66,7 +67,7 @@ gathered in `dist/`:
 - `NovaBank-<Host>-<version>.jar`: extensions per host plugin;
 - `novabank-api-<version>.jar`: API, for plugin developers.
 
-`dist/` also holds `NovaBank-<version>-EXTRACT-ME.zip`, the organised archive (with `docs/NovaBank - Documentation complete.pdf`
+`dist/` also holds `NovaBank-EXTRACT-ME.zip`, the organised archive (with `docs/NovaBank - Documentation complete.pdf`
 when present). `mvn clean` empties `dist/`. The other JARs in the modules' `target/` folders are intermediate artefacts: never install
 them on a server.
 
