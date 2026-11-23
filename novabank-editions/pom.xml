@@ -178,15 +178,15 @@
                                 <!-- Archive a telecharger (SpigotMC, BuiltByBit...) : JAR ranges par usage, README,
                                      licence et documentation PDF (docs/, absente = archive sans PDF). -->
                                 <property name="pkg" value="NovaBank-${file.version}"/>
-                                <copy file="${project.basedir}/src/package/README.txt" tofile="${work}/README.txt"
+                                <copy file="${project.basedir}/src/package/README.txt" tofile="${work}/1 - READ ME FIRST - LISEZ-MOI.txt"
                                       overwrite="true">
                                     <filterset>
                                         <filter token="VERSION" value="${project.version}"/>
                                         <filter token="FILE_VERSION" value="${file.version}"/>
                                     </filterset>
                                 </copy>
-                                <zip destfile="${dist}/NovaBank-${file.version}.zip">
-                                    <zipfileset file="${work}/README.txt" prefix="${pkg}"/>
+                                <zip destfile="${dist}/NovaBank-${file.version}-EXTRACT-ME.zip">
+                                    <zipfileset file="${work}/1 - READ ME FIRST - LISEZ-MOI.txt" prefix="${pkg}"/>
                                     <zipfileset file="${project.basedir}/../LICENSE" prefix="${pkg}"/>
                                     <zipfileset dir="${project.basedir}/../docs" includes="*.pdf" prefix="${pkg}"/>
                                     <zipfileset file="${base.jar}" prefix="${pkg}/Standalone"/>
