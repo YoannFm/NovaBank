@@ -59,6 +59,18 @@
 
     <build>
         <plugins>
+            <!-- mvn clean vide aussi dist/ : les JAR d'une ancienne version n'y restent pas. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${project.basedir}/../dist</directory>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
@@ -151,6 +163,17 @@
                                     <fileset dir="${work}/embedded"/>
                                     <zipfileset src="${base.jar}" excludes="META-INF/MANIFEST.MF,plugin.yml"/>
                                 </jar>
+
+                                <!-- Fichiers a publier, reunis dans dist/ a la racine du projet : plugin autonome,
+                                     8 extensions et API (jamais les JAR intermediaires des modules). -->
+                                <property name="dist" value="${project.basedir}/../dist"/>
+                                <mkdir dir="${dist}"/>
+                                <copy file="${base.jar}" todir="${dist}" overwrite="true"/>
+                                <copy todir="${dist}" overwrite="true">
+                                    <fileset dir="${out}" includes="NovaBank-*-${file.version}.jar"/>
+                                </copy>
+                                <copy file="${project.basedir}/../novabank-api/target/novabank-api-${file.version}.jar"
+                                      todir="${dist}" overwrite="true"/>
                             </target>
                         </configuration>
                     </execution>

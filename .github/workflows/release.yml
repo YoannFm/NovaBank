@@ -1,5 +1,6 @@
 # Publishes a GitHub release when a version tag is pushed (git tag v1.0.0 && git push origin v1.0.0).
-# The release gets the standalone JAR and the 8 extension JARs; attach the documentation PDF by hand afterwards.
+# The release gets the files of dist/ (standalone JAR, 8 extension JARs, API JAR) and the licence; attach the
+# documentation PDF by hand afterwards.
 name: Release
 
 on:
@@ -27,7 +28,5 @@ jobs:
           draft: true
           generate_release_notes: true
           files: |
-            novabank-plugin/target/NovaBank-*.jar
-            novabank-editions/target/editions/NovaBank-*.jar
-            novabank-api/target/novabank-api-*.jar
+            dist/*.jar
             LICENSE

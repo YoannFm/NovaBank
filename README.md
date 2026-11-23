@@ -48,12 +48,15 @@ Requirements: **JDK 25** (the build tool; the produced bytecode targets Java 17)
 mvn -B install
 ```
 
-The first build downloads the dependencies, including the public APIs of the host plugins. Results:
+The first build downloads the dependencies, including the public APIs of the host plugins. The files to publish are
+gathered in `dist/`:
 
-- `novabank-plugin/target/NovaBank-<version>.jar`: standalone plugin;
-- `novabank-editions/target/editions/NovaBank-<Host>-<version>.jar`: extensions per host plugin.
+- `NovaBank-<version>.jar`: standalone plugin;
+- `NovaBank-<Host>-<version>.jar`: extensions per host plugin;
+- `novabank-api-<version>.jar`: API, for plugin developers.
 
-The `*-interne-*.jar` files are intermediate artefacts: never install them on a server.
+`mvn clean` empties `dist/`. The other JARs in the modules' `target/` folders are intermediate artefacts: never install
+them on a server.
 
 Tests that need a real database server (MariaDB, MySQL, MongoDB, Redis) are skipped unless one is provided; see
 [CONTRIBUTING.md](CONTRIBUTING.md).
