@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/banner.png" alt="NovaBank - Safe block bank for Minecraft" width="720">
+</p>
+
 # NovaBank
 
 A virtual **block bank** for Minecraft servers. Players deposit the items the server accepts, withdraw them whenever
