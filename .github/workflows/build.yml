@@ -14,6 +14,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-java@v5
@@ -32,6 +33,7 @@ jobs:
 
   databases:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     strategy:
       fail-fast: false
       matrix:
@@ -83,7 +85,11 @@ jobs:
       - name: Build the modules the suite depends on
         run: mvn -B install -DskipTests -pl ${{ matrix.module }} -am
       - name: ${{ matrix.product }} test suite
-        run: mvn -B test -pl ${{ matrix.module }}
+        # A test that hangs fails after 5 minutes with its name (separate thread: works even when blocked on I/O).
+        run: >-
+          mvn -B test -pl ${{ matrix.module }}
+          -Djunit.jupiter.execution.timeout.default=5m
+          -Djunit.jupiter.execution.timeout.thread.mode.default=SEPARATE_THREAD
       - name: Failed tests in the run summary
         if: failure()
         run: |
