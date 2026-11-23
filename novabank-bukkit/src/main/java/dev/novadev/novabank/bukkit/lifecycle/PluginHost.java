@@ -15,9 +15,6 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public interface PluginHost {
 
-    /** Nom du dossier de donnees commun a tous les JAR NovaBank, dans {@code plugins/}. */
-    String DATA_FOLDER = "NovaBank";
-
     /** @return plugin Bukkit proprietaire des taches, ecouteurs, commandes et services (NovaBank, ou l'hote qui le charge) */
     Plugin owner();
 
@@ -25,8 +22,7 @@ public interface PluginHost {
     Logger logger();
 
     /**
-     * @return dossier de donnees de NovaBank (config.yml, lang/, base SQLite...) : toujours {@code plugins/NovaBank/},
-     *         quel que soit le JAR qui demarre le moteur, pour qu'une seule configuration et une seule base servent
+     * @return dossier de donnees de NovaBank (config.yml, lang/, base SQLite...), choisi par {@link DataFolders}
      */
     Path dataFolder();
 
@@ -67,7 +63,7 @@ public interface PluginHost {
 
             @Override
             public Path dataFolder() {
-                return plugin.getDataFolder().toPath().resolveSibling(DATA_FOLDER);
+                return DataFolders.locate(plugin);
             }
 
             @Override

@@ -2,6 +2,7 @@ package dev.novadev.novabank.bukkit.integration;
 
 import dev.novadev.novabank.api.entity.EntityRef;
 import dev.novadev.novabank.api.operation.OperationType;
+import dev.novadev.novabank.bukkit.lifecycle.DataFolders;
 import dev.novadev.novabank.core.text.ConsoleText;
 import java.lang.reflect.Method;
 import java.util.Map;
@@ -43,8 +44,8 @@ final class SuperiorSkyblockBridge implements HostBridge {
         Method existing = manager.getMethod("getCommand", String.class);
         if (existing.invoke(commands, context.label().name()) != null) {
             context.logger().warning(
-                    ConsoleText.tr("SuperiorSkyblock2 a deja /is {0} : changez commands.hosts.superiorskyblock2.name dans plugins/NovaBank/config.yml.",
-                            context.label().name()));
+                    ConsoleText.tr("SuperiorSkyblock2 a deja /is {0} : changez commands.hosts.superiorskyblock2.name dans {1}.",
+                            context.label().name(), configFile(context)));
         }
         register.invoke(commands, command);
         writeMenuEntries(context);
@@ -57,12 +58,12 @@ final class SuperiorSkyblockBridge implements HostBridge {
     }
 
     /**
-     * Ecrit une fois, dans {@code plugins/NovaBank/hosts/}, les entrees du menu des permissions a copier dans
+     * Ecrit une fois, dans le dossier {@code hosts/} de NovaBank, les entrees du menu des permissions a copier dans
      * SuperiorSkyblock2 (fr et en) ; un fichier deja present n'est jamais remplace.
      */
     private static void writeMenuEntries(Context context) {
-        java.nio.file.Path folder = context.host().getDataFolder().toPath()
-                .resolveSibling(dev.novadev.novabank.bukkit.lifecycle.PluginHost.DATA_FOLDER).resolve("hosts");
+        java.nio.file.Path folder = DataFolders.locate(context.host())
+                .resolve("hosts");
         for (String language : new String[] {"fr", "en"}) {
             String name = "superiorskyblock2-permissions-" + language + ".yml";
             java.nio.file.Path target = folder.resolve(name);
@@ -82,6 +83,10 @@ final class SuperiorSkyblockBridge implements HostBridge {
                 context.logger().warning(ConsoleText.tr("SuperiorSkyblock2 : {0} non ecrit : {1}", target, failure));
             }
         }
+    }
+
+    private static java.nio.file.Path configFile(Context context) {
+        return DataFolders.locate(context.host()).resolve("config.yml");
     }
 
     /** Enregistre le privilege (une seule fois par demarrage de SuperiorSkyblock2), puis le relit. */

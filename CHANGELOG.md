@@ -4,6 +4,13 @@ All notable changes to NovaBank. Full details: the *Changelog* chapter of the do
 
 Numbering follows the NovaDev format: `YYYY.MM.DD (MAJOR.MINOR.FEATURE)`.
 
+## 2026.11.23 (1.0.1 #1)
+
+- The SuperiorSkyblock2 module and the BentoBox addon keep their configuration and data in their host's folder
+  (`plugins/SuperiorSkyblock2/modules/NovaBank/`, `plugins/BentoBox/addons/NovaBank/`), like other modules and addons.
+  A folder that already has a `config.yml` (`plugins/NovaBank/` first) still serves every NovaBank JAR: existing
+  installations are kept as they are.
+
 ## 2026.11.23 (1.0.0 #1) - first release
 
 NovaBank is developed in one go; this version gathers everything below. MIT licence.

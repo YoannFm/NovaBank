@@ -12,9 +12,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
 /**
- * NovaBank pour SuperiorSkyblock2 : module a deposer dans {@code plugins/SuperiorSkyblock2/modules/}. Cette classe
- * doit rester la premiere du JAR (SuperiorSkyblock2 cherche le module classe par classe et s'arrete a la premiere
- * classe illisible). La commande {@code /is bank} et les privileges sont montes par le moteur ; ici, seulement le
+ * NovaBank pour SuperiorSkyblock2 : module a deposer dans {@code plugins/SuperiorSkyblock2/modules/},
+ * configuration et donnees dans {@code modules/NovaBank/}. Cette classe doit rester la premiere du JAR
+ * (SuperiorSkyblock2 cherche le module classe par classe et s'arrete a la premiere classe illisible). La commande {@code /is bank} et les privileges sont montes par le moteur ; ici, seulement le
  * demarrage et l'enregistrement precoce des privileges.
  */
 public final class NovaBankModule extends PluginModule {
@@ -44,8 +44,8 @@ public final class NovaBankModule extends PluginModule {
     @Override
     public void onEnable(SuperiorSkyblock plugin) {
         Plugin owner = Bukkit.getPluginManager().getPlugin("SuperiorSkyblock2");
-        launcher = NovaBankLauncher.start(EmbeddedHost.of(owner, getLogger(), this::getResource,
-                getClass().getClassLoader()), false);
+        launcher = NovaBankLauncher.start(EmbeddedHost.of(owner, getModuleFolder().toPath(), getLogger(),
+                this::getResource, getClass().getClassLoader()), false);
         if (launcher == null) {
             getLogger().severe(ConsoleText.tr("NovaBank n'a pas demarre : voir les messages ci-dessus."));
         }

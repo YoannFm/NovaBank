@@ -22,14 +22,14 @@ Integration retiree : {0}	Integration removed: {0}
 Retrait d'une integration incomplet	Removal of an integration incomplete
 Extension {0} : chargement impossible (API de l'hote non reconnue).	Extension {0}: loading impossible (host API not recognised).
 Extension {0} indisponible (API de l'hote non reconnue) ; la banque reste accessible par /bank.	Extension {0} unavailable (host API not recognised); the bank stays reachable through /bank.
-NovaBank ({0}) : moteur NovaBank deja en marche sur ce serveur, edition ajoutee (configuration et base communes dans plugins/NovaBank/).	NovaBank ({0}): NovaBank engine already running on this server, edition added (shared configuration and database in plugins/NovaBank/).
+NovaBank ({0}) : moteur NovaBank deja en marche sur ce serveur, edition ajoutee (configuration et base communes dans {1}).	NovaBank ({0}): NovaBank engine already running on this server, edition added (shared configuration and database in {1}).
 NovaBank ({0}) : le moteur sera demarre par le plugin NovaBank installe, edition ajoutee.	NovaBank ({0}): the engine will be started by the installed NovaBank plugin, edition added.
 Permissions NovaBank non declarees : {0}	NovaBank permissions not declared: {0}
 Niveau d'ile BentoBox : lecture de la banque impossible	BentoBox island level: bank read impossible
 Niveau d'ile : lecture de la banque impossible	Island level: bank read impossible
 Niveau d'ile : mise a jour de l'ile {0} impossible	Island level: update of island {0} impossible
 permissions {0}.deposit|withdraw	permissions {0}.deposit|withdraw
-SuperiorSkyblock2 a deja /is {0} : changez commands.hosts.superiorskyblock2.name dans plugins/NovaBank/config.yml.	SuperiorSkyblock2 already has /is {0}: change commands.hosts.superiorskyblock2.name in plugins/NovaBank/config.yml.
+SuperiorSkyblock2 a deja /is {0} : changez commands.hosts.superiorskyblock2.name dans {1}.	SuperiorSkyblock2 already has /is {0}: change commands.hosts.superiorskyblock2.name in {1}.
 /is {0}, privileges {1} et {2}	/is {0}, privileges {1} and {2}
 SuperiorSkyblock2 : entrees du menu des permissions a copier dans menus/permissions.yml ecrites dans {0}	SuperiorSkyblock2: permission menu entries to copy into menus/permissions.yml written to {0}
 SuperiorSkyblock2 : {0} non ecrit : {1}	SuperiorSkyblock2: {0} not written: {1}
@@ -189,9 +189,9 @@ Synchronisation : notification locale en echec	Synchronisation: local notificati
 Synchronisation : lecture des changements en echec, nouvel essai a la prochaine periode	Synchronisation: reading changes failed, new attempt at the next period
 Synchronisation : le receveur a echoue pour la banque {0}	Synchronisation: the receiver failed for bank {0}
 NovaBank n'a pas demarre : voir les messages ci-dessus.	NovaBank did not start: see the messages above.
-/{0} {1} existe deja (addon Bank ?) : changez commands.hosts.bentobox.name dans plugins/NovaBank/config.yml.	/{0} {1} already exists (Bank addon?): change commands.hosts.bentobox.name in plugins/NovaBank/config.yml.
+/{0} {1} existe deja (addon Bank ?) : changez commands.hosts.bentobox.name dans {2}.	/{0} {1} already exists (Bank addon?): change commands.hosts.bentobox.name in {2}.
 Retrait de NovaBank incomplet : {0}	Removal of NovaBank incomplete: {0}
-IridiumSkyblock a deja /is {0} : changez commands.hosts.iridiumskyblock.name dans plugins/NovaBank/config.yml.	IridiumSkyblock already has /is {0}: change commands.hosts.iridiumskyblock.name in plugins/NovaBank/config.yml.
+IridiumSkyblock a deja /is {0} : changez commands.hosts.iridiumskyblock.name dans {1}.	IridiumSkyblock already has /is {0}: change commands.hosts.iridiumskyblock.name in {1}.
 Pilote {0} charge ({1}, version {2}.{3})	Driver {0} loaded ({1}, version {2}.{3})
 Propriete {0} deja definie ({1}) : conservee	Property {0} already set ({1}): kept
 Pilote {0} decharge ({1} inscription(s) DriverManager retiree(s))	Driver {0} unloaded ({1} DriverManager registration(s) removed)

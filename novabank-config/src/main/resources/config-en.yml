@@ -14,7 +14,7 @@
 # (the commented original stays in backup/).
 config-version: 7
 
-# Language of the messages and the console: file plugins/NovaBank/lang/<language>.yml (fr and en provided).
+# Language of the messages and the console: file lang/<language>.yml next to this file (fr and en provided).
 # Keys missing from your file use the text shipped with NovaBank. Switching to fr and reloading
 # also translates the comments of this file into French (values unchanged, old file in backup/).
 language: en

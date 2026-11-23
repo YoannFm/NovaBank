@@ -1,5 +1,6 @@
 package dev.novadev.novabank.bukkit.host;
 
+import dev.novadev.novabank.bukkit.lifecycle.DataFolders;
 import dev.novadev.novabank.bukkit.lifecycle.PluginHost;
 import dev.novadev.novabank.core.text.ConsoleText;
 import java.io.IOException;
@@ -16,8 +17,8 @@ import org.bukkit.plugin.Plugin;
 
 /**
  * NovaBank charge par un plugin hote (module SuperiorSkyblock2, addon BentoBox) : les taches, ecouteurs et commandes
- * appartiennent a l'hote, les donnees restent dans {@code plugins/NovaBank/}. Version et auteurs sont lus dans le
- * descripteur embarque {@value #DESCRIPTOR}.
+ * appartiennent a l'hote, les donnees vont dans le dossier du module ou de l'addon ({@link DataFolders}). Version et
+ * auteurs sont lus dans le descripteur embarque {@value #DESCRIPTOR}.
  */
 public final class EmbeddedHost implements PluginHost {
 
@@ -28,13 +29,16 @@ public final class EmbeddedHost implements PluginHost {
     public static final String DESCRIPTOR = "novabank-plugin.yml";
 
     private final Plugin owner;
+    private final Path folder;
     private final Logger logger;
     private final Function<String, InputStream> resources;
     private final ClassLoader loader;
     private final YamlConfiguration descriptor;
 
-    private EmbeddedHost(Plugin owner, Logger logger, Function<String, InputStream> resources, ClassLoader loader) {
+    private EmbeddedHost(Plugin owner, Path folder, Logger logger, Function<String, InputStream> resources,
+                         ClassLoader loader) {
         this.owner = Objects.requireNonNull(owner, "owner");
+        this.folder = Objects.requireNonNull(folder, "folder");
         this.logger = Objects.requireNonNull(logger, "logger");
         this.resources = Objects.requireNonNull(resources, "resources");
         this.loader = Objects.requireNonNull(loader, "loader");
@@ -51,14 +55,15 @@ public final class EmbeddedHost implements PluginHost {
 
     /**
      * @param owner     plugin hote, proprietaire des taches et ecouteurs
+     * @param folder    dossier du module ou de l'addon ({@code plugins/SuperiorSkyblock2/modules/NovaBank/})
      * @param logger    journal du module ou de l'addon
      * @param resources lecture d'une ressource du JAR NovaBank
      * @param loader    chargeur des classes NovaBank
      * @return l'hote
      */
-    public static EmbeddedHost of(Plugin owner, Logger logger, Function<String, InputStream> resources,
+    public static EmbeddedHost of(Plugin owner, Path folder, Logger logger, Function<String, InputStream> resources,
                                   ClassLoader loader) {
-        return new EmbeddedHost(owner, logger, resources, loader);
+        return new EmbeddedHost(owner, folder, logger, resources, loader);
     }
 
     @Override
@@ -73,7 +78,7 @@ public final class EmbeddedHost implements PluginHost {
 
     @Override
     public Path dataFolder() {
-        return owner.getDataFolder().toPath().resolveSibling(DATA_FOLDER);
+        return DataFolders.locate(owner.getDataFolder().toPath().getParent(), folder);
     }
 
     @Override

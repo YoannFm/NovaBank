@@ -6,7 +6,7 @@
 
     <groupId>dev.novadev.novabank</groupId>
     <artifactId>novabank-parent</artifactId>
-    <version>2026.11.23 (1.0.0 #1)</version>
+    <version>2026.11.23 (1.0.1 #1)</version>
     <packaging>pom</packaging>
 
     <name>NovaBank</name>
@@ -37,7 +37,7 @@
              build echoue sinon). Les noms de fichier des JAR en derivent, sans espace, parenthese ni # (SuperiorSkyblock2
              lit ses modules par une URL ou # coupe le chemin). -->
         <release.date>2026.11.23</release.date>
-        <release.number>1.0.0</release.number>
+        <release.number>1.0.1</release.number>
         <!-- Numero de build : version "date (numero #build)", fichiers "date-numero-buildN" (jamais de # dans un nom). -->
         <release.build>1</release.build>
         <file.version>${release.date}-${release.number}-build${release.build}</file.version>

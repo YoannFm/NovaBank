@@ -10,6 +10,7 @@ import dev.novadev.novabank.api.operation.OperationType;
 import dev.novadev.novabank.bukkit.host.EditionExtension;
 import dev.novadev.novabank.bukkit.host.HostLabels;
 import dev.novadev.novabank.bukkit.host.RemoteBridges;
+import dev.novadev.novabank.bukkit.lifecycle.DataFolders;
 import dev.novadev.novabank.core.text.ConsoleText;
 import java.util.List;
 import java.util.Map;
@@ -45,8 +46,8 @@ public final class IridiumExtension implements EditionExtension {
         if (iridium.getCommandManager().getCommands().stream().anyMatch(other -> other.aliases.stream()
                 .anyMatch(name::equalsIgnoreCase))) {
             plugin.getLogger().warning(
-                    ConsoleText.tr("IridiumSkyblock a deja /is {0} : changez commands.hosts.iridiumskyblock.name dans plugins/NovaBank/config.yml.",
-                            name));
+                    ConsoleText.tr("IridiumSkyblock a deja /is {0} : changez commands.hosts.iridiumskyblock.name dans {1}.",
+                            name, DataFolders.locate(plugin).resolve("config.yml")));
         }
         iridium.getCommandManager().registerCommand(command);
         AutoCloseable rights = RemoteBridges.publishRights(plugin.getServer().getServicesManager(), plugin, EDITION,

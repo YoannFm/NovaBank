@@ -6,6 +6,7 @@ import dev.novadev.novabank.bukkit.host.EmbeddedHost;
 import dev.novadev.novabank.bukkit.host.HostLabels;
 import dev.novadev.novabank.bukkit.host.NovaBankLauncher;
 import dev.novadev.novabank.bukkit.host.RemoteBridges;
+import dev.novadev.novabank.bukkit.lifecycle.DataFolders;
 import dev.novadev.novabank.core.text.ConsoleText;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,8 +49,8 @@ public final class NovaBankAddon extends Addon {
 
     @Override
     public void onEnable() {
-        launcher = NovaBankLauncher.start(EmbeddedHost.of(getPlugin(), getLogger(), this::getResource,
-                getClass().getClassLoader()), false);
+        launcher = NovaBankLauncher.start(EmbeddedHost.of(getPlugin(), getDataFolder().toPath(), getLogger(),
+                this::getResource, getClass().getClassLoader()), false);
         if (launcher == null) {
             logError(ConsoleText.tr("NovaBank n'a pas demarre : voir les messages ci-dessus."));
             setState(State.DISABLED);
@@ -65,8 +66,8 @@ public final class NovaBankAddon extends Addon {
             mode.getPlayerCommand().ifPresent(parent -> {
                 if (parent.getSubCommands().containsKey(label[0])) {
                     logWarning(
-                            ConsoleText.tr("/{0} {1} existe deja (addon Bank ?) : changez commands.hosts.bentobox.name dans plugins/NovaBank/config.yml.",
-                                    parent.getLabel(), label[0]));
+                            ConsoleText.tr("/{0} {1} existe deja (addon Bank ?) : changez commands.hosts.bentobox.name dans {2}.",
+                                    parent.getLabel(), label[0], DataFolders.locate(getPlugin()).resolve("config.yml")));
                 } else {
                     mounted.add(BankSubcommand.mount(this, parent, label));
                 }

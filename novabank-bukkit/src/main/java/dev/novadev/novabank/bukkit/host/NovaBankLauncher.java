@@ -96,8 +96,8 @@ public final class NovaBankLauncher implements AutoCloseable {
         AutoCloseable announcement = EditionChannel.announceEdition(services, owner, edition, host.version());
         if (EditionChannel.engineRunning(services)) {
             host.logger().info(
-                    ConsoleText.tr("NovaBank ({0}) : moteur NovaBank deja en marche sur ce serveur, edition ajoutee (configuration et base communes dans plugins/NovaBank/).",
-                            edition));
+                    ConsoleText.tr("NovaBank ({0}) : moteur NovaBank deja en marche sur ce serveur, edition ajoutee (configuration et base communes dans {1}).",
+                            edition, host.dataFolder()));
             return new NovaBankLauncher(announcement, null).withExtensions(host);
         }
         if (!pluginJar && novaBankPluginInstalled(owner.getServer().getPluginManager(), owner)) {
@@ -157,7 +157,7 @@ public final class NovaBankLauncher implements AutoCloseable {
         }
     }
 
-    /** Langue de la console des le premier message, lue dans {@code plugins/NovaBank/config.yml} (francais s'il manque). */
+    /** Langue de la console des le premier message, lue dans le {@code config.yml} en service (francais s'il manque). */
     private static void consoleLanguage(PluginHost host) {
         java.io.File config = host.dataFolder().resolve("config.yml").toFile();
         ConsoleText.language(org.bukkit.configuration.file.YamlConfiguration.loadConfiguration(config)

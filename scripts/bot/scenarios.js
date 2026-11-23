@@ -855,7 +855,7 @@ async function phaseHub () {
       await bot.command('/novabank', null)
       await sleep(1200)
       const all = chats.join('\n')
-      for (const needle of ['YoannFM', 'v2026.11.23 (1.0.0 #1)', 'discord.gg/HtjPAfqUXu', 'github.com/YoannFm/NovaBank', '/bank deposit', '/novabank reload']) {
+      for (const needle of ['YoannFM', 'v2026.11.23 (1.0.1 #1)', 'discord.gg/HtjPAfqUXu', 'github.com/YoannFm/NovaBank', '/bank deposit', '/novabank reload']) {
         check(all.includes(needle), 'absent de l\'accueil : ' + needle)
       }
       check(/suggest_command/.test(all), 'aucune commande cliquable (suggest_command)')

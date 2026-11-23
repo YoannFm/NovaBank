@@ -1,5 +1,6 @@
 package dev.novadev.novabank.bukkit.host;
 
+import dev.novadev.novabank.bukkit.lifecycle.DataFolders;
 import dev.novadev.novabank.config.model.CommandLabel;
 import dev.novadev.novabank.config.section.CommandsSectionParser;
 import java.io.File;
@@ -9,8 +10,8 @@ import org.bukkit.plugin.Plugin;
 
 /**
  * Nom et alias de la commande de banque d'un hote ({@code commands.hosts.<edition>}), lus directement dans
- * {@code plugins/NovaBank/config.yml} : le JAR d'une edition ne fait pas forcement tourner le moteur. Valeurs par defaut
- * si le fichier n'existe pas encore (premier demarrage).
+ * le {@code config.yml} en service ({@link DataFolders}) : le JAR d'une edition ne fait pas forcement tourner le
+ * moteur. Valeurs par defaut si le fichier n'existe pas encore (premier demarrage).
  */
 public final class HostLabels {
 
@@ -23,7 +24,7 @@ public final class HostLabels {
      * @return le nom et les alias configures
      */
     public static CommandLabel read(Plugin anyPlugin, String edition) {
-        File config = new File(anyPlugin.getDataFolder().getParentFile(), "NovaBank/config.yml");
+        File config = DataFolders.locate(anyPlugin).resolve("config.yml").toFile();
         YamlConfiguration yaml = YamlConfiguration.loadConfiguration(config);
         String path = "commands.hosts." + edition;
         CommandLabel defaults = CommandsSectionParser.HOST_DEFAULTS.getOrDefault(edition,
@@ -36,7 +37,7 @@ public final class HostLabels {
 
     /**
      * Texte de la langue du serveur pour un JAR d'edition qui ne fait pas forcement tourner le moteur : fichier
-     * {@code plugins/NovaBank/lang/<langue>.yml}, sinon le fichier livre dans ce JAR, sinon {@code fallback}.
+     * {@code lang/<langue>.yml} du dossier en service, sinon le fichier livre dans ce JAR, sinon {@code fallback}.
      *
      * @param anyPlugin un plugin du serveur (pour trouver {@code plugins/})
      * @param key       cle du texte ({@code bank.clan-description})
@@ -60,7 +61,7 @@ public final class HostLabels {
     }
 
     private static YamlConfiguration texts(Plugin anyPlugin) {
-        File folder = new File(anyPlugin.getDataFolder().getParentFile(), "NovaBank");
+        File folder = DataFolders.locate(anyPlugin).toFile();
         String language = YamlConfiguration.loadConfiguration(new File(folder, "config.yml")).getString("language", "fr");
         YamlConfiguration texts = YamlConfiguration.loadConfiguration(new File(folder, "lang/" + language + ".yml"));
         try (java.io.InputStream shipped = HostLabels.class.getResourceAsStream("/lang/" + language + ".yml")) {
