@@ -7,12 +7,12 @@ region. Leaderboards, a chest menu, a full in-game administration menu and a pub
 Free and open source, under the [MIT licence](LICENSE).
 
 <p align="center">
-  <img src="docs/screenshots/bank-menu.png" alt="Bank menu" width="32%">
-  <img src="docs/screenshots/bank-stock.png" alt="Item tooltip in the bank" width="32%">
-  <img src="docs/screenshots/items-editor.png" alt="Accepted items editor" width="32%">
+  <img src="docs/screenshots/bank-stock.png" alt="Bank menu with an item tooltip" width="49%">
+  <img src="docs/screenshots/items-editor.png" alt="Accepted items editor" width="49%">
 </p>
 <p align="center">
-  <img src="docs/screenshots/admin-menu.png" alt="Administration menu" width="48%">
+  <img src="docs/screenshots/admin-menu.png" alt="Administration menu" width="49%">
+  <img src="docs/screenshots/price-list.png" alt="Price list" width="49%">
 </p>
 
 ## Features
