@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>dev.novadev.novabank</groupId>
+        <artifactId>novabank-parent</artifactId>
+        <version>2026.11.23 (1.0.0 #1)</version>
+    </parent>
+
+    <artifactId>novabank-host-bentobox</artifactId>
+    <name>NovaBank pour BentoBox (point d'entree)</name>
+    <description>Addon BentoBox : demarrage, sous-commande /is bank de chaque mode de jeu, flags de depot et de retrait.
+        Java 25, comme BentoBox 3.23. Le JAR vendu est assemble par novabank-editions.</description>
+
+    <properties>
+        <!-- BentoBox 3.23 est compile en Java 25 : ses classes ne se lisent pas en release 17. -->
+        <maven.compiler.release>25</maven.compiler.release>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>codemc-bentobox</id>
+            <url>https://repo.codemc.org/repository/bentoboxworld/</url>
+        </repository>
+    </repositories>
+    <dependencies>
+        <dependency>
+            <groupId>dev.novadev.novabank</groupId>
+            <artifactId>novabank-bukkit</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>26.0.2</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- API de l'hote, depot public (codemc-bentobox) ; transitives exclues : seules ses classes servent a compiler. -->
+        <dependency>
+            <groupId>world.bentobox</groupId>
+            <artifactId>bentobox</artifactId>
+            <version>3.23.4</version>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <!-- JAR intermediaire (classe d'entree seule, sans moteur) : ne pas installer sur un serveur, prendre
+             novabank-editions/target/editions/NovaBank-<Hote>-*.jar. -->
+        <finalName>${project.artifactId}-interne-${file.version}</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>addon.yml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <excludes>
+                    <exclude>addon.yml</exclude>
+                </excludes>
+            </resource>
+        </resources>
+    </build>
+</project>

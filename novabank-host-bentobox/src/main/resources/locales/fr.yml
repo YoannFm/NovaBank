@@ -1,0 +1,14 @@
+protection:
+  flags:
+    NOVABANK_DEPOSIT:
+      name: "Banque : deposer"
+      description: "<green>Rang minimal pour deposer des items</green>\n<green>dans la banque de l'ile (NovaBank).</green>"
+      hint: "Depot dans la banque de l'ile refuse"
+    NOVABANK_WITHDRAW:
+      name: "Banque : retirer"
+      description: "<green>Rang minimal pour retirer des items</green>\n<green>de la banque de l'ile (NovaBank).</green>"
+      hint: "Retrait de la banque de l'ile refuse"
+novabank:
+  commands:
+    bank:
+      description: "Banque d'items de l'ile (NovaBank)"

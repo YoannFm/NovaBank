@@ -1,0 +1,70 @@
+# Entrees du menu des permissions de SuperiorSkyblock2 pour les privileges de NovaBank.
+# Copiez les deux blocs ci-dessous dans plugins/SuperiorSkyblock2/menus/permissions.yml, section "permissions:",
+# au meme niveau que "deposit_money:" (deux espaces), puis /is admin reload ou redemarrage.
+# Ce fichier est ecrit une seule fois par NovaBank : vos modifications sont conservees.
+permissions:
+  novabank_deposit:
+    display-menu: true
+    permission-enabled:
+      type: CHEST
+      name: '&6Banque : déposer'
+      lore:
+        - '&7Déposer des items dans la banque NovaBank de l''île.'
+        - '&7Actuellement &aACTIVÉ&7.'
+    permission-disabled:
+      type: CHEST
+      name: '&6Banque : déposer'
+      lore:
+        - '&7Déposer des items dans la banque NovaBank de l''île.'
+        - '&7Actuellement &cDÉSACTIVÉ&7.'
+    role-permission:
+      type: CHEST
+      name: '&6Banque : déposer'
+      lore:
+        - '&7Déposer des items dans la banque NovaBank de l''île.'
+        - '&7Rôle : &e{}&7.'
+        - ''
+        - '{0}'
+    has-access:
+      sound:
+        type: ENTITY_EXPERIENCE_ORB_PICKUP
+        volume: 0.2
+        pitch: 0.2
+    no-access:
+      sound:
+        type: BLOCK_ANVIL_PLACE
+        volume: 0.2
+        pitch: 0.2
+
+  novabank_withdraw:
+    display-menu: true
+    permission-enabled:
+      type: HOPPER
+      name: '&6Banque : retirer'
+      lore:
+        - '&7Retirer des items de la banque NovaBank de l''île.'
+        - '&7Actuellement &aACTIVÉ&7.'
+    permission-disabled:
+      type: HOPPER
+      name: '&6Banque : retirer'
+      lore:
+        - '&7Retirer des items de la banque NovaBank de l''île.'
+        - '&7Actuellement &cDÉSACTIVÉ&7.'
+    role-permission:
+      type: HOPPER
+      name: '&6Banque : retirer'
+      lore:
+        - '&7Retirer des items de la banque NovaBank de l''île.'
+        - '&7Rôle : &e{}&7.'
+        - ''
+        - '{0}'
+    has-access:
+      sound:
+        type: ENTITY_EXPERIENCE_ORB_PICKUP
+        volume: 0.2
+        pitch: 0.2
+    no-access:
+      sound:
+        type: BLOCK_ANVIL_PLACE
+        volume: 0.2
+        pitch: 0.2

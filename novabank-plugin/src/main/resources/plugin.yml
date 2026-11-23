@@ -1,0 +1,47 @@
+name: NovaBank
+version: '${project.version}'
+main: dev.novadev.novabank.bukkit.NovaBankPlugin
+api-version: '1.17'
+author: YoannFM
+description: Banque virtuelle de blocs (depot, retrait, valeur par entite, classements).
+# Fournisseurs d'items custom : charges avant NovaBank s'ils sont installes.
+softdepend: [PlaceholderAPI, ItemsAdder, Nexo, Oraxen, CraftEngine, MMOItems, SuperiorSkyblock2, BentoBox,
+  IridiumSkyblock, Towny, SimpleClans, Lands, GriefPrevention, WorldGuard]
+# Les commandes (joueur et administration) sont enregistrees dynamiquement (noms et alias
+# configurables, section commands de config.yml) : elles ne sont pas declarees ici.
+# Folia : planificateurs par region (module novabank-platform-folia). Ignore par Spigot/Paper.
+folia-supported: true
+permissions:
+  novabank.use:
+    description: Utilisation de la banque (consultation, choix de la banque active).
+    default: true
+  novabank.deposit:
+    description: Depot d'items dans la banque active.
+    default: true
+  novabank.withdraw:
+    description: Retrait d'items de la banque active.
+    default: true
+  novabank.admin:
+    description: Administration de NovaBank (diagnostic, rechargement, consultation et historique des banques).
+    default: op
+  novabank.admin.reset:
+    description: Reinitialisation de la valeur d'une banque (avec confirmation).
+    default: op
+  novabank.admin.migrate:
+    description: Migration de tout le contenu du stockage vers un autre backend (avec confirmation, maintenance).
+    default: op
+  novabank.admin.transfer:
+    description: Transfert de tout le stock d'une banque vers une autre (fusion ou dissolution, avec confirmation).
+    default: op
+  novabank.admin.config:
+    description: Lecture et modification de la configuration en jeu (/novabank config get|set).
+    default: op
+  novabank.admin.secrets:
+    description: Modification des secrets (mots de passe, URI MongoDB) dans le menu des parametres de /bank admin.
+    default: op
+  novabank.admin.gui:
+    description: Editeur visuel de la disposition du GUI de banque (/novabank gui).
+    default: op
+  novabank.admin.items:
+    description: Edition des items acceptes et de leurs prix en jeu (/novabank items).
+    default: op

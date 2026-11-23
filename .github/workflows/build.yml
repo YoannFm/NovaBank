@@ -1,0 +1,99 @@
+# Build and tests on every push and pull request.
+# - build: full Maven build with every unit test, JARs kept as artifacts.
+# - databases: the storage and sync test suites against real MariaDB, MySQL, MongoDB and Redis servers
+#   (skipped on a developer machine without a server). Outage tests need a control script and stay skipped here.
+name: Build
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '25'
+          cache: maven
+      - name: Build and unit tests
+        run: mvn -B install
+      - name: Keep the JARs
+        uses: actions/upload-artifact@v4
+        with:
+          name: novabank-jars
+          path: |
+            novabank-plugin/target/NovaBank-*.jar
+            novabank-editions/target/editions/NovaBank-*.jar
+          if-no-files-found: error
+
+  databases:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - product: mariadb
+            module: novabank-storage-sql
+          - product: mysql
+            module: novabank-storage-sql
+          - product: mongodb
+            module: novabank-storage-mongo
+          - product: redis
+            module: novabank-sync-redis
+    services:
+      mariadb:
+        image: ${{ matrix.product == 'mariadb' && 'mariadb:11.8' || '' }}
+        env:
+          MARIADB_ROOT_PASSWORD: novabank-test
+        ports: ['3306:3306']
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized" --health-interval=5s --health-retries=20
+      mysql:
+        image: ${{ matrix.product == 'mysql' && 'mysql:8.4' || '' }}
+        env:
+          MYSQL_ROOT_PASSWORD: novabank-test
+        ports: ['3307:3306']
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -pnovabank-test" --health-interval=5s --health-retries=30
+      mongodb:
+        image: ${{ matrix.product == 'mongodb' && 'mongo:8.0' || '' }}
+        ports: ['27017:27017']
+      redis:
+        image: ${{ matrix.product == 'redis' && 'redis:8' || '' }}
+        ports: ['6379:6379']
+    env:
+      NOVABANK_IT_DB_PRODUCT: ${{ matrix.product }}
+      NOVABANK_IT_DB_HOST: 127.0.0.1
+      NOVABANK_IT_DB_PORT: ${{ matrix.product == 'mariadb' && '3306' || matrix.product == 'mysql' && '3307' || '6379' }}
+      NOVABANK_IT_DB_NAME: mysql
+      NOVABANK_IT_DB_USER: root
+      NOVABANK_IT_DB_PASSWORD: novabank-test
+      NOVABANK_IT_DB_URI: mongodb://127.0.0.1:27017
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '25'
+          cache: maven
+      - name: Build the modules the suite depends on
+        run: mvn -B install -DskipTests -pl ${{ matrix.module }} -am
+      - name: ${{ matrix.product }} test suite
+        run: mvn -B test -pl ${{ matrix.module }}
+      - name: Failed tests in the run summary
+        if: failure()
+        run: |
+          for f in */target/surefire-reports/*.txt; do
+            if grep -qE "FAILURE|ERROR" "$f"; then
+              echo "### $(basename "$f" .txt)"
+              echo '```'
+              grep -vE "^\s+at |^\s+\.\.\. [0-9]+ more" "$f" | head -60
+              echo '```'
+            fi
+          done >> "$GITHUB_STEP_SUMMARY"

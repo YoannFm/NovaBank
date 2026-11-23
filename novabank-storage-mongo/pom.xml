@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>dev.novadev.novabank</groupId>
+        <artifactId>novabank-parent</artifactId>
+        <version>2026.11.23 (1.0.0 #1)</version>
+    </parent>
+
+    <artifactId>novabank-storage-mongo</artifactId>
+    <name>NovaBank Storage MongoDB</name>
+    <description>Stockage MongoDB des banques : module embarque (D18), charge en chargeur isole avec le pilote
+        telecharge. Transactions multi-documents sur replica set, journal en attente par banque sinon.</description>
+
+    <properties>
+        <!-- Valeur par defaut, completee par l'agent JaCoCo (prepare-agent). -->
+        <argLine></argLine>
+    </properties>
+
+    <dependencies>
+        <!-- Fourni par le plugin (chargeur parent) : jamais copie dans le jar du module. -->
+        <dependency>
+            <groupId>dev.novadev.novabank</groupId>
+            <artifactId>novabank-core</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <!-- Telecharge au demarrage (D6) et place dans le meme chargeur isole que le module. -->
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongodb-driver-sync</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>dev.novadev.novabank</groupId>
+            <artifactId>novabank-core</artifactId>
+            <type>test-jar</type>
+        </dependency>
+        <!-- Migrations SQLite <-> MongoDB (tests). -->
+        <dependency>
+            <groupId>dev.novadev.novabank</groupId>
+            <artifactId>novabank-storage-sql</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-nop</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.tngtech.archunit</groupId>
+            <artifactId>archunit-junit5</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <!-- Pilote SQLite des tests de migration : acces natif autorise pour le JDK 25. -->
+                    <argLine>@{argLine} --enable-native-access=ALL-UNNAMED</argLine>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

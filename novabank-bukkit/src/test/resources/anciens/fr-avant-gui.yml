@@ -1,0 +1,121 @@
+# =====================================================================
+#  NovaBank - textes en francais
+# =====================================================================
+# Couleurs : &0-&9, &a-&f, styles &l &o &n &m &k, &r ; couleurs hexadecimales &#RRGGBB.
+# Les {nom} sont remplaces par NovaBank. Une cle supprimee reprend le texte fourni.
+# Ce fichier n'est jamais ecrase : apres une mise a jour, les nouvelles cles prennent
+# leur texte par defaut (un avertissement l'indique au demarrage).
+
+# Format des nombres et des dates.
+locale: fr-FR
+date-format: "dd/MM/yyyy HH:mm"
+prefix: "&6[NovaBank] &r"
+
+general:
+  no-permission: "&cVous n'avez pas la permission d'utiliser cette commande."
+  players-only: "&cCette commande est reservee aux joueurs."
+  usage: "Utilisation : &f{usage}"
+  unknown-subcommand: "&cSous-commande inconnue : {argument}. &rUtilisation : &f{usage}"
+  invalid-quantity: "&cQuantite invalide : {value} (nombre entier positif ou 'all')."
+  invalid-item: "&cItem invalide : {value}."
+  invalid-page: "&cPage invalide : {value}."
+  unknown-player: "&cJoueur inconnu : {player}."
+  storage-error: "&cBase de donnees indisponible, reessayez plus tard."
+
+bank:
+  description: "Banque de blocs NovaBank"
+  help:
+    - "&6NovaBank &7- commandes :"
+    - "&f/{label} deposit <item|hand|all> [quantite] &7: deposer des items"
+    - "&f/{label} withdraw <item> <quantite|all> &7: retirer des items"
+    - "&f/{label} info &7: banque active, valeur et stock"
+    - "&f/{label} select <type> &7: choisir la banque active"
+  deposit:
+    success: "&aDepot de &f{quantity} {item}&a dans &f{bank}&a : &f+{value}&a (valeur : &f{total}&a)."
+    returned: "&e{quantity} {item} rendus : {reason}"
+    pending: "&e{quantity} {item} n'ont pas pu vous etre rendus (inventaire plein) : ils vous seront livres a votre prochaine connexion."
+  withdraw:
+    success: "&aRetrait de &f{quantity} {item}&a de &f{bank}&a : &f{value}&a (valeur : &f{total}&a)."
+    pending: "&e{quantity} {item} n'ont pas pu etre remis (inventaire plein) : ils vous seront livres a votre prochaine connexion."
+    returned: "&e{quantity} {item} n'ont pas pu etre remis (inventaire plein) et sont restes dans la banque."
+    confirmation-pending: "&c{quantity} {item} remis, mais l'operation n'a pas pu etre confirmee. Un administrateur a ete prevenu."
+  refusal:
+    busy: "&cUne operation est deja en cours, patientez."
+    cooldown: "&cPatientez encore {seconds} s avant une nouvelle operation."
+    no-permission: "&cVous n'avez pas la permission de faire cette operation."
+    no-bank: "&cVous n'avez acces a aucune banque."
+    role-not-allowed: "&cVotre role ne vous permet pas cette operation dans la banque {bank}."
+    not-accepted: "&cLa banque n'accepte pas {item}."
+    nothing-in-hand: "&cVous ne tenez aucun item deposable en main (les items renommes, enchantes ou abimes sont refuses)."
+    nothing-to-deposit: "&cVous n'avez aucun item deposable dans votre inventaire."
+    quantity-limit: "&cAu plus {max} unites par operation."
+    not-enough-items: "&cVous n'avez pas assez de {item} deposables (les items renommes, enchantes ou abimes sont refuses)."
+    insufficient-stock: "&cStock insuffisant de {item} dans la banque {bank}."
+    player-offline: "&cOperation annulee : vous vous etes deconnecte."
+    storage-error: "&cBase de donnees indisponible : rien n'a ete enregistre, vos items vous ont ete rendus."
+    refused: "&cOperation refusee par la banque ({reason})."
+    internal-error: "&cErreur inattendue : contactez un administrateur."
+  info:
+    header: "&6Banque active : &f{bank} &7({type})"
+    value: "&7Valeur : &f{value}"
+    stock-header: "&7Stock :"
+    stock-line: " &7- &f{item} &7: &f{quantity}"
+    stock-empty: "&7La banque est vide."
+    others: "&7Autres banques : &f{banks} &7(/{label} select <type>)"
+    no-bank: "&cVous n'avez acces a aucune banque."
+  select:
+    success: "&aBanque active : &f{bank} &7({type})"
+    unknown-type: "&cType de banque inconnu : {type}. Types disponibles : {types}."
+    not-member: "&cVous n'appartenez a aucune banque de type {type}."
+  delivery:
+    delivered: "&a{quantity} item(s) en attente vous ont ete livres."
+    remaining: "&e{quantity} item(s) restent en attente (inventaire plein) : ils seront livres a votre prochaine connexion."
+
+admin:
+  description: "Administration de NovaBank"
+  diagnostic:
+    running: "Diagnostic en cours..."
+    failed: "&cDiagnostic impossible : {cause}"
+    header: "&bDiagnostic"
+    line: "&7 - {label} : &f{value}"
+    plugin: "Plugin"
+    server: "Serveur"
+    java: "Java"
+    storage: "Stockage"
+    storage-ok: "&aOK&f (schema v{schema}, {latency} ms)"
+    storage-ko: "&cINACCESSIBLE&f ({error})"
+    driver: "Pilote"
+    driver-value: "{id} {artifact} (version JDBC du pilote {version})"
+    items: "Items acceptes"
+    warnings: "Avertissements de configuration"
+    io: "Threads IO"
+    io-value: "{threads}/{max} vivants, {active} actif(s), {queued}/{capacity} en file, {completed} tache(s) terminee(s){shutdown}"
+    io-shutdown: ", ARRET DEMANDE"
+    saturated: "executeur IO sature ou arrete"
+  reload:
+    running: "Rechargement de config.yml..."
+    refused: "&cRechargement refuse : {errors} erreur(s). La configuration precedente reste en vigueur."
+    applied: "&aConfiguration rechargee : {items} item(s) accepte(s), {warnings} avertissement(s)."
+    restart-required: "&eStockage, commandes ou politique de retrait modifies : redemarrage necessaire pour les appliquer."
+  bank:
+    header: "&6Banque de {player} &7({bank})"
+    missing: "&7Cette banque n'a encore jamais servi."
+  reset:
+    confirm: "&eReset de la valeur de la banque de {player} (stock conserve). Confirmez avec &f/{label} reset {player} confirm&e dans les {seconds} s."
+    no-request: "&cAucun reset en attente de confirmation pour {player} : tapez d'abord /{label} reset {player}."
+    done: "&aValeur de la banque de {player} reinitialisee : {value} effaces, stock conserve."
+    missing: "&cLa banque de {player} n'existe pas encore."
+    failed: "&cReset refuse ({reason})."
+  history:
+    header: "&6Historique de {player} &7- page {page}"
+    line: "&7{date} &f{type} &7{item} &fx{quantity} &7({value}) {state}"
+    empty: "&7Aucune operation."
+    next: "&7Page suivante : &f/{label} history {player} {next}"
+    type:
+      deposit: "Depot"
+      withdraw: "Retrait"
+      reset: "Reset"
+    state:
+      reserved: "&e[en cours]"
+      committed: ""
+      returned: "&7[annule]"

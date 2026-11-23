@@ -1,0 +1,8 @@
+{
+  "name": "novabank-test-bot",
+  "private": true,
+  "description": "Bot mineflayer des tests reels NovaBank. Dependances installees HORS du projet (voir README du dossier scripts/bot dans run-bot-scenarios.sh).",
+  "dependencies": {
+    "mineflayer": "4.39.0"
+  }
+}

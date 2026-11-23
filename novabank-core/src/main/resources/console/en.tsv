@@ -1,0 +1,444 @@
+# Traductions anglaises des messages de console (francais<TAB>anglais). Verifie par ConsoleTextCatalogTest.
+Le nom /{0} est deja pris par un autre plugin : utilisez /{1}:{2}	The name /{0} is already taken by another plugin: use /{1}:{2}
+Commande /{0} desinscrite ({1} entree(s))	Command /{0} unregistered ({1} entry(ies))
+Configuration recue d'un autre serveur refusee : {0}	Configuration received from another server refused: {0}
+Configuration recue d'un autre serveur : sauvegarde faite, appliquee	Configuration received from another server: backup made, applied
+Configuration recue d'un autre serveur : sauvegarde faite, rechargement refuse (configuration precedente conservee)	Configuration received from another server: backup made, reload refused (previous configuration kept)
+Configuration recue d'un autre serveur ignoree : serveur occupe	Configuration received from another server ignored: server busy
+Configuration modifiee mais non diffusee aux autres serveurs (Redis indisponible)	Configuration changed but not sent to the other servers (Redis unavailable)
+section non deployable : {0}	section that cannot be deployed: {0}
+fichier illisible ou non ecrit ({0})	file unreadable or not written ({0})
+message de configuration invalide	invalid configuration message
+Mise a jour de {0} non faite : {1}	Update of {0} not done: {1}
+{0} GUI NovaBank non fermee(s) a la desactivation : joueurs geres par un autre thread (desactivation a chaud sous Folia)	{0} NovaBank GUI(s) not closed on disable: players handled by another thread (hot disable under Folia)
+{0} illisible : version inconnue ({1})	{0} unreadable: unknown version ({1})
+Integration : {0} est installe mais son API n'est pas reconnue (version non prise en charge).	Integration: {0} is installed but its API is not recognised (unsupported version).
+Integration : {0} ignore, le type '{1}' est deja gere par un autre plugin.	Integration: {0} ignored, type '{1}' is already handled by another plugin.
+Integration : {0} prise en charge (type de banque '{1}')	Integration: {0} supported (bank type '{1}')
+Integration : {0} prise en charge (type de banque '{1}'), {2}	Integration: {0} supported (bank type '{1}'), {2}
+commande publiee pour l'extension {0}	command published for the {0} extension
+Integration : commande et droits de {0} indisponibles (API non reconnue) ; la banque reste accessible par /bank.	Integration: command and rights of {0} unavailable (API not recognised); the bank stays reachable through /bank.
+Integration retiree : {0}	Integration removed: {0}
+Retrait d'une integration incomplet	Removal of an integration incomplete
+Extension {0} : chargement impossible (API de l'hote non reconnue).	Extension {0}: loading impossible (host API not recognised).
+Extension {0} indisponible (API de l'hote non reconnue) ; la banque reste accessible par /bank.	Extension {0} unavailable (host API not recognised); the bank stays reachable through /bank.
+NovaBank ({0}) : moteur NovaBank deja en marche sur ce serveur, edition ajoutee (configuration et base communes dans plugins/NovaBank/).	NovaBank ({0}): NovaBank engine already running on this server, edition added (shared configuration and database in plugins/NovaBank/).
+NovaBank ({0}) : le moteur sera demarre par le plugin NovaBank installe, edition ajoutee.	NovaBank ({0}): the engine will be started by the installed NovaBank plugin, edition added.
+Permissions NovaBank non declarees : {0}	NovaBank permissions not declared: {0}
+Niveau d'ile BentoBox : lecture de la banque impossible	BentoBox island level: bank read impossible
+Niveau d'ile : lecture de la banque impossible	Island level: bank read impossible
+Niveau d'ile : mise a jour de l'ile {0} impossible	Island level: update of island {0} impossible
+permissions {0}.deposit|withdraw	permissions {0}.deposit|withdraw
+SuperiorSkyblock2 a deja /is {0} : changez commands.hosts.superiorskyblock2.name dans plugins/NovaBank/config.yml.	SuperiorSkyblock2 already has /is {0}: change commands.hosts.superiorskyblock2.name in plugins/NovaBank/config.yml.
+/is {0}, privileges {1} et {2}	/is {0}, privileges {1} and {2}
+SuperiorSkyblock2 : entrees du menu des permissions a copier dans menus/permissions.yml ecrites dans {0}	SuperiorSkyblock2: permission menu entries to copy into menus/permissions.yml written to {0}
+SuperiorSkyblock2 : {0} non ecrit : {1}	SuperiorSkyblock2: {0} not written: {1}
+Towny : /town {0} existe deja, alias ignore.	Towny: /town {0} already exists, alias ignored.
+/town {0}, permissions novabank.town.deposit|withdraw	/town {0}, permissions novabank.town.deposit|withdraw
+Items custom : {0} est installe mais son API n'est pas reconnue (version non prise en charge) : ses items ne sont pas utilisables.	Custom items: {0} is installed but its API is not recognised (unsupported version): its items cannot be used.
+Items custom : {0} pris en charge (namespace {1})	Custom items: {0} supported (namespace {1})
+Items custom : evenement de chargement de {0} introuvable, le catalogue ne sera pas reevalue automatiquement (/novabank reload)	Custom items: loading event of {0} not found, the catalogue will not be re-evaluated automatically (/novabank reload)
+Integration : SimpleClans -> la banque d'un clan suit son tag	Integration: SimpleClans -> a clan's bank follows its tag
+SimpleClans : banque {0} non deplacee vers {1} (base indisponible) : /novabank transfer {2} {3}	SimpleClans: bank {0} not moved to {1} (database unavailable): /novabank transfer {2} {3}
+SimpleClans : la banque {0} a deja du stock (ancien clan du meme tag) : banque {1} non deplacee. Pour fusionner : /novabank transfer {2} {3}	SimpleClans: bank {0} already has stock (old clan with the same tag): bank {1} not moved. To merge: /novabank transfer {2} {3}
+Integration : BentoBox Level -> niveau d'ile (integrations.bentobox.island-level)	Integration: BentoBox Level -> island level (integrations.bentobox.island-level)
+Reconciliation des retraits reportee au prochain demarrage	Withdrawal reconciliation postponed to the next start
+Reconciliation : {0} retrait(s) reste(s) reserve(s) solde(s) ({1} unite(s) non remise(s)), {2} echec(s)	Reconciliation: {0} withdrawal(s) left reserved settled ({1} unit(s) not handed over), {2} failure(s)
+Relais des changements de banque en echec	Bank change relay failed
+Relais des changements de banque : un consommateur a echoue	Bank change relay: a consumer failed
+Fermeture de {0} interrompue	Closing of {0} interrupted
+Fermeture de {0} impossible : {1}	Closing of {0} impossible: {1}
+Rechargement demande par un autre serveur : applique	Reload requested by another server: applied
+Rechargement demande par un autre serveur : refuse (configuration precedente conservee)	Reload requested by another server: refused (previous configuration kept)
+Fichier de langue {0} illisible ({1}) : textes fournis avec NovaBank utilises	Language file {0} unreadable ({1}): texts shipped with NovaBank used
+Fichier de langue {0} absent : textes '{1}' fournis avec NovaBank utilises	Language file {0} missing: '{1}' texts shipped with NovaBank used
+Mise a jour du fichier de langue {0} impossible : {1}	Update of language file {0} impossible: {1}
+Environnement : Minecraft {0}, {1} ({2}), Java {3}	Environment: Minecraft {0}, {1} ({2}), Java {3}
+Folia {0} n'est pas supporte : NovaBank exige Folia {1} ou plus recent. NovaBank ne demarre pas.	Folia {0} is not supported: NovaBank requires Folia {1} or newer. NovaBank does not start.
+Planificateur {0} indisponible, JAR NovaBank incomplet ? {1}. NovaBank ne demarre pas.	{0} scheduler unavailable, incomplete NovaBank JAR? {1}. NovaBank does not start.
+Minecraft {0} n'est pas supporte : NovaBank exige Minecraft {1} ou plus recent. NovaBank ne demarre pas.	Minecraft {0} is not supported: NovaBank requires Minecraft {1} or newer. NovaBank does not start.
+Version du serveur non reconnue ({0}) : compatibilite non verifiee.	Server version not recognised ({0}): compatibility not checked.
+Configuration invalide ({0} erreur(s), detail ci-dessus) : NovaBank est desactive. Corrigez config.yml puis redemarrez le serveur.	Invalid configuration ({0} error(s), details above): NovaBank is disabled. Fix config.yml then restart the server.
+Fichier de configuration par defaut cree : {0}	Default configuration file created: {0}
+fichier illisible ({0})	unreadable file ({0})
+syntaxe YAML invalide (ligne:colonne {0})	invalid YAML syntax (line:column {0})
+syntaxe YAML invalide	invalid YAML syntax
+Fichier {0} mis a jour (version {1} -> {2}) : {3} cle(s) ajoutee(s)	File {0} updated (version {1} -> {2}): {3} key(s) added
+, {0} cle(s) retiree(s) car supprimee(s) de NovaBank {1}	, {0} key(s) removed because deleted from NovaBank {1}
+, vos valeurs sont conservees ; ancien fichier sauvegarde : {0}	, your values are kept; old file backed up: {0}
+. Cle(s) obsolete(s) conservee(s), a retirer si inutiles : {0}	. Obsolete key(s) kept, remove them if unused: {0}
+. Cette version du serveur (avant 1.18.1) ne conserve pas les commentaires : consultez la sauvegarde pour l'original commente	. This server version (before 1.18.1) does not keep comments: see the backup for the commented original
+Stockage {0} impossible : bibliotheque du serveur absente ({1}). Choisissez un autre storage.type.	Storage {0} impossible: server library missing ({1}). Choose another storage.type.
+Stockage {0} indisponible : {1}	Storage {0} unavailable: {1}
+Stockage MONGODB indisponible ({0}) : {1}. Verifiez storage.mongodb (uri, base, delais). NovaBank ne demarre pas.	MONGODB storage unavailable ({0}): {1}. Check storage.mongodb (uri, database, timeouts). NovaBank does not start.
+Stockage {0} indisponible : {1}. Verifiez storage.sql (hote, port, base, utilisateur, mot de passe, options). NovaBank ne demarre pas.	Storage {0} unavailable: {1}. Check storage.sql (host, port, database, user, password, options). NovaBank does not start.
+Creation du dossier de la base impossible ({0}) : {1}	Creating the database folder impossible ({0}): {1}
+Stockage {0} pret : {1} (schema v{2})	Storage {0} ready: {1} (schema v{2})
+NovaBank {0} active en {1} ms.	NovaBank {0} enabled in {1} ms.
+Erreur inattendue au demarrage : NovaBank est desactive.	Unexpected error on startup: NovaBank is disabled.
+NovaBank arrete, aucun thread NovaBank restant.	NovaBank stopped, no NovaBank thread left.
+NovaBank arrete, mais des threads NovaBank sont encore actifs : {0}	NovaBank stopped, but NovaBank threads are still active: {0}
+Arret : attente de {0} operation(s) en cours (au plus {1} ms)	Shutdown: waiting for {0} operation(s) in progress (at most {1} ms)
+Arret : operations en cours terminees en {0} ms	Shutdown: operations in progress finished in {0} ms
+Arret : {0} operation(s) non terminee(s) apres {1} ms ({2} tache(s) abandonnee(s)). Les retraits restes reserves seront soldes au prochain demarrage ; un depot interrompu est journalise ci-dessus.	Shutdown: {0} operation(s) not finished after {1} ms ({2} task(s) abandoned). Withdrawals left reserved will be settled at the next start; an interrupted deposit is logged above.
+Evenement BankOperationEvent : un ecouteur a echoue	BankOperationEvent event: a listener failed
+Evenement BankCreatedEvent : un ecouteur a echoue	BankCreatedEvent event: a listener failed
+Evenement {0} omis (arret du serveur)	Event {0} skipped (server shutting down)
+Evenement BankOperationEvent : publication en echec	BankOperationEvent event: publication failed
+Tache asynchrone NovaBank en echec : {0}	NovaBank asynchronous task failed: {0}
+Executeur IO : delai d'arret de {0} s depasse, {1} tache(s) en attente abandonnee(s), taches en cours interrompues	IO executor: shutdown delay of {0} s exceeded, {1} pending task(s) abandoned, running tasks interrupted
+Executeur IO : des threads {0}* ne se sont pas arretes	IO executor: {0}* threads did not stop
+Tache periodique NovaBank non lancee (executeur IO sature ou arrete)	NovaBank periodic task not started (IO executor saturated or stopped)
+Tache ignoree : NovaBank est arrete	Task ignored: NovaBank is stopped
+Tache ignoree : NovaBank est desactive (arret en cours)	Task ignored: NovaBank is disabled (shutting down)
+Tache NovaBank en echec pendant l'arret : {0}	NovaBank task failed during shutdown: {0}
+Stockage {0} : {1}	Storage {0}: {1}
+Migration {0} -> {1} : maintenance, nouvelles operations refusees	Migration {0} -> {1}: maintenance, new operations refused
+Migration : operations en cours terminees, ecritures gelees ; ouverture de la cible {0}	Migration: operations in progress finished, writes frozen; opening target {0}
+Migration : cible {0} ouverte ({1})	Migration: target {0} open ({1})
+Migration : {0}	Migration: {0}
+Migration {0} -> {1} terminee et verifiee : {2}. Mettez storage.type: {3} puis redemarrez le serveur ; NovaBank reste en maintenance jusque-la.	Migration {0} -> {1} finished and checked: {2}. Set storage.type: {3} then restart the server; NovaBank stays in maintenance until then.
+Migration : erreur inattendue	Migration: unexpected error
+Migration en echec : {0}. Stockage actif {1} inchange, maintenance levee.	Migration failed: {0}. Active storage {1} unchanged, maintenance lifted.
+Banque {0} modifiee ailleurs (version {1})	Bank {0} changed elsewhere (version {1})
+Synchronisation multi-serveur active : serveur {0}, Redis {1}, reconciliation toutes les {2} s	Multi-server synchronisation active: server {0}, Redis {1}, reconciliation every {2} s
+chemin invalide (attendu : cles separees par des points, ex. limits.cooldown-ms)	invalid path (expected: keys separated by dots, e.g. limits.cooldown-ms)
+valeur secrete : modifiable uniquement dans config.yml, jamais en jeu	secret value: can only be changed in config.yml, never in game
+gere par NovaBank, non modifiable	managed by NovaBank, cannot be changed
+un niveau de ce chemin n'est pas une section	a level of this path is not a section
+chemin inconnu	unknown path
+echec de la migration de la version {0} vers {1} : {2}	migration from version {0} to {1} failed: {2}
+absente : version {0} supposee	missing: version {0} assumed
+version {0} plus recente que celle geree par ce plugin ({1}) : mettez NovaBank a jour	version {0} newer than the one handled by this plugin ({1}): update NovaBank
+Case hors du coffre : {0}	Slot outside the chest: {0}
+Lignes hors bornes : {0}	Rows out of range: {0}
+Boutons manquants : {0}	Missing buttons: {0}
+Bouton '{0}' hors du coffre : case {1}	Button '{0}' outside the chest: slot {1}
+Case {0} occupee par deux boutons	Slot {0} used by two buttons
+type d'entite non active dans banks.entity-types : droits ignores	entity type not enabled in banks.entity-types: rights ignored
+role inconnu '{0}' (roles possibles : owner, admin, member)	unknown role '{0}' (possible roles: owner, admin, member)
+au moins un type d'entite doit etre active	at least one entity type must be enabled
+type d'entite invalide '{0}' (attendu : lettres, chiffres, '_', '.' ou '-')	invalid entity type '{0}' (expected: letters, digits, '_', '.' or '-')
+type '{0}' en double : ignore	duplicate type '{0}': ignored
+type '{0}' absent de banks.{1}	type '{0}' missing from banks.{1}
+type '{0}' en double	duplicate type '{0}'
+nom de commande '{0}' deja utilise par une autre commande NovaBank	command name '{0}' already used by another NovaBank command
+alias invalide '{0}' (attendu : {1})	invalid alias '{0}' (expected: {1})
+alias '{0}' deja utilise par une commande NovaBank	alias '{0}' already used by a NovaBank command
+case {0} deja occupee par le bouton '{1}'	slot {0} already used by button '{1}'
+cle d'item invalide '{0}' (attendu namespace:id en minuscules, par exemple minecraft:stone)	invalid item key '{0}' (expected namespace:id in lower case, for example minecraft:stone)
+icone vanilla attendue (minecraft:...), recu : '{0}'	vanilla icon expected (minecraft:...), got: '{0}'
+item inconnu dans cette version du serveur : '{0}', valeur par defaut utilisee	item unknown in this server version: '{0}', default value used
+zero ou plus attendu, recu : {0}	zero or more expected, got: {0}
+nombre attendu, recu : {0}	number expected, got: {0}
+item '{0}' deja declare plus haut	item '{0}' already declared above
+aucun item accepte : aucun depot ne sera possible	no accepted item: no deposit will be possible
+le prix doit etre positif ou nul (recu : {0})	the price must be positive or zero (got: {0})
+fournisseur d'items '{0}' absent du serveur : item '{1}' ignore	item provider '{0}' missing from the server: item '{1}' ignored
+{0} : '{1}' ignore	{0}: '{1}' ignored
+type d'entite non active dans banks.entity-types : classement ignore	entity type not enabled in banks.entity-types: leaderboard ignored
+Redis (multi-serveur) est incompatible avec storage.type = {0}, stockage mono-serveur : utilisez MYSQL, MARIADB ou MONGODB, ou desactivez Redis	Redis (multi-server) is not compatible with storage.type = {0}, a single-server storage: use MYSQL, MARIADB or MONGODB, or disable Redis
+utilisateur SQL vide alors que storage.type = {0}	empty SQL user while storage.type = {0}
+mot de passe SQL vide : deconseille hors environnement de test	empty SQL password: not advised outside a test environment
+l'option '{0}' est interdite : identifiants dans username / password uniquement (jamais dans les options JDBC)	option '{0}' is forbidden: credentials in username / password only (never in JDBC options)
+doit etre inferieur ou egal a max-size ({0})	must be lower than or equal to max-size ({0})
+URI MongoDB invalide (attendu : mongodb://... ou mongodb+srv://...)	invalid MongoDB URI (expected: mongodb://... or mongodb+srv://...)
+la verification SHA-256 des pilotes ne peut pas etre desactivee : valeur ignoree	SHA-256 checking of drivers cannot be disabled: value ignored
+section attendue (cle: valeur), recu : {0}	section expected (key: value), got: {0}
+section attendue (cle: valeur)	section expected (key: value)
+valeur invalide {0} (attendu : {1})	invalid value {0} (expected: {1})
+cle obligatoire manquante	required key missing
+booleen attendu (true ou false), recu : {0}	boolean expected (true or false), got: {0}
+nombre entier attendu, recu : {0}	whole number expected, got: {0}
+doit etre {0} (recu : {1})	must be {0} (got: {1})
+valeur invalide {0} (valeurs possibles : {1})	invalid value {0} (possible values: {1})
+texte attendu, recu : {0}	text expected, got: {0}
+liste attendue, recu : {0}	list expected, got: {0}
+une section	a section
+une liste	a list
+cle inconnue, ignoree (faute de frappe ?)	unknown key, ignored (typo?)
+superieur ou egal a {0}	greater than or equal to {0}
+inferieur ou egal a {0}	lower than or equal to {0}
+compris entre {0} et {1}	between {0} and {1}
+Reset de la banque {0} par {1} : {2}, valeur effacee {3} (operation {4})	Reset of bank {0} by {1}: {2}, value erased {3} (operation {4})
+Transfert {0} : {1} x {2} retirees de {3} mais ni deposees dans {4} ni rendues (operations {5}, {6}, {7}, retrait solde {8})	Transfer {0}: {1} x {2} withdrawn from {3} but neither deposited into {4} nor given back (operations {5}, {6}, {7}, withdrawal settled {8})
+Transfert {0} de {1} vers {2} par {3} : {4} ligne(s), {5} unite(s), {6} probleme(s)	Transfer {0} from {1} to {2} by {3}: {4} line(s), {5} unit(s), {6} problem(s)
+Operation d'administration impossible : {0}	Administration operation impossible: {0}
+Remise de la livraison {0} ({1} x {2} au joueur {3}) non enregistree : risque de seconde remise, verifier manuellement.	Hand-over of delivery {0} ({1} x {2} to player {3}) not saved: risk of a second hand-over, check manually.
+Remise des livraisons du joueur {0} interrompue : {1}	Hand-over of the deliveries of player {0} interrupted: {1}
+Depot {0} d'issue inconnue (base indisponible) : {1} x {2} du joueur {3} vers {4}. Items NON rendus pour eviter une duplication : verifier le journal et rendre a la main si l'operation est absente.	Deposit {0} with unknown outcome (database unavailable): {1} x {2} from player {3} to {4}. Items NOT given back to avoid a duplication: check the log and give them back by hand if the operation is missing.
+Items a rendre manuellement au joueur {0} : {1} x {2} (depot {3} refuse, livraison differee impossible a enregistrer)	Items to give back by hand to player {0}: {1} x {2} (deposit {3} refused, delayed delivery could not be saved)
+Depot du joueur {0} interrompu : {1}	Deposit of player {0} interrupted: {1}
+Consultation de la banque du joueur {0} impossible : {1}	Reading the bank of player {0} impossible: {1}
+Choix de banque du joueur {0} impossible : {1}	Bank choice of player {0} impossible: {1}
+Stockage en echec ({0}), tentative {1}/{2} : {3}	Storage failure ({0}), attempt {1}/{2}: {3}
+Retrait {0} non confirme en base : {1} x {2} remis au joueur {3} sur {4}. Il reste RESERVED et sera solde au prochain demarrage avec 0 remis : verifier manuellement.	Withdrawal {0} not confirmed in the database: {1} x {2} handed to player {3} out of {4}. It stays RESERVED and will be settled at the next start with 0 handed over: check manually.
+Retrait {0} du joueur {1} interrompu : {2}	Withdrawal {0} of player {1} interrupted: {2}
+Retrait {0} du joueur {1} interrompu apres reservation (solde au prochain demarrage) : {2}	Withdrawal {0} of player {1} interrupted after reservation (settled at the next start): {2}
+Retrait {0} reste reserve ({1} x {2}, joueur {3}) solde avec 0 remis	Withdrawal {0} left reserved ({1} x {2}, player {3}) settled with 0 handed over
+Solde du retrait {0} impossible : {1}	Settling withdrawal {0} impossible: {1}
+Droit de {0} sur {1} indisponible : {2}	{0} right on {1} unavailable: {2}
+Entite preferee de type {0} indisponible : {1}	Preferred entity of type {0} unavailable: {1}
+Nom de l'entite {0} indisponible : {1}	Name of entity {0} unavailable: {1}
+Fournisseur d'appartenance '{0}' en echec pour {1} : {2}	Ownership provider '{0}' failed for {1}: {2}
+Classements : recalcul complet en echec, l'ancien classement reste en service	Leaderboards: full recomputation failed, the old leaderboard stays in use
+Classements : recalcul de la banque {0} en echec	Leaderboards: recomputation of bank {0} failed
+Classements : notification locale en echec	Leaderboards: local notification failed
+Synchronisation : commande de controle '{0}' en echec	Synchronisation: control command '{0}' failed
+Synchronisation : notification locale en echec	Synchronisation: local notification failed
+Synchronisation : lecture des changements en echec, nouvel essai a la prochaine periode	Synchronisation: reading changes failed, new attempt at the next period
+Synchronisation : le receveur a echoue pour la banque {0}	Synchronisation: the receiver failed for bank {0}
+NovaBank n'a pas demarre : voir les messages ci-dessus.	NovaBank did not start: see the messages above.
+/{0} {1} existe deja (addon Bank ?) : changez commands.hosts.bentobox.name dans plugins/NovaBank/config.yml.	/{0} {1} already exists (Bank addon?): change commands.hosts.bentobox.name in plugins/NovaBank/config.yml.
+Retrait de NovaBank incomplet : {0}	Removal of NovaBank incomplete: {0}
+IridiumSkyblock a deja /is {0} : changez commands.hosts.iridiumskyblock.name dans plugins/NovaBank/config.yml.	IridiumSkyblock already has /is {0}: change commands.hosts.iridiumskyblock.name in plugins/NovaBank/config.yml.
+Pilote {0} charge ({1}, version {2}.{3})	Driver {0} loaded ({1}, version {2}.{3})
+Propriete {0} deja definie ({1}) : conservee	Property {0} already set ({1}): kept
+Pilote {0} decharge ({1} inscription(s) DriverManager retiree(s))	Driver {0} unloaded ({1} DriverManager registration(s) removed)
+Fichier {0} corrompu ou modifie : retelechargement	File {0} corrupted or modified: downloading again
+Telechargement de {0} ({1} Mo) depuis {2}	Downloading {0} ({1} MB) from {2}
+{0} telecharge, somme SHA-256 verifiee	{0} downloaded, SHA-256 checksum verified
+Echec du telechargement de {0} depuis {1}	Download of {0} from {1} failed
+Module {0} charge ({1} pilote(s) epingle(s))	Module {0} loaded ({1} pinned driver(s))
+Module {0} : thread(s) encore actif(s) a la fermeture : {1}	Module {0}: thread(s) still active on close: {1}
+Module {0} decharge	Module {0} unloaded
+Module {0} : copie extraite differente du jar du plugin, extraction a nouveau	Module {0}: extracted copy differs from the plugin jar, extracting again
+Module {0} extrait : {1} (sha256 {2}...)	Module {0} extracted: {1} (sha256 {2}...)
+Stockage {0} : derniere ligne du journal tronquee (arret brutal pendant une ecriture, operation jamais confirmee) ignoree, {1} octet(s) conserve(s) dans {2}	Storage {0}: last log line truncated (hard stop during a write, operation never confirmed) ignored, {1} byte(s) kept in {2}
+Stockage {0} : {1} operation(s) du journal rejouee(s), compaction	Storage {0}: {1} log operation(s) replayed, compaction
+Stockage {0} : ecriture du journal {1} impossible ({2}) : plus aucune operation acceptee jusqu'au redemarrage	Storage {0}: writing log {1} impossible ({2}): no operation accepted until the restart
+Stockage {0} : instantane {1} non ecrit ({2}), journal conserve, nouvel essai plus tard	Storage {0}: snapshot {1} not written ({2}), log kept, new attempt later
+Stockage {0} : journal non vide apres l'instantane ({1})	Storage {0}: log not empty after the snapshot ({1})
+MongoDB : arret de l'elagueur de tampons du pilote impossible	MongoDB: stopping the driver's buffer pruner impossible
+MongoDB : {0} operation(s) en attente rattrapee(s) au demarrage	MongoDB: {0} pending operation(s) caught up on startup
+MongoDB : operation {0} annulee sur la banque {1} (identifiant deja journalise pour une autre banque)	MongoDB: operation {0} cancelled on bank {1} (id already logged for another bank)
+Synchronisation Redis : abonne a {0}	Redis synchronisation: subscribed to {0}
+Synchronisation Redis : liaison d'abonnement perdue ({0}), nouvel essai dans {1} s	Redis synchronisation: subscription link lost ({0}), new attempt in {1} s
+Synchronisation Redis : la commande de controle a echoue	Redis synchronisation: the control command failed
+Synchronisation Redis : le receveur a echoue	Redis synchronisation: the receiver failed
+Synchronisation Redis : message ignore (format invalide)	Redis synchronisation: message ignored (invalid format)
+Synchronisation Redis : publication impossible ({0}), les autres serveurs se rattraperont par le stockage	Redis synchronisation: publication impossible ({0}), the other servers will catch up through the storage
+Discord : salon injoignable ({0}), nouvel essai plus tard	Discord: channel unreachable ({0}), new attempt later
+Discord : envoi refuse (HTTP {0}) : verifiez discord.mode, discord.webhook-url ou discord.bot-token et discord.channel-id, et les droits du bot dans le salon	Discord: sending refused (HTTP {0}): check discord.mode, discord.webhook-url or discord.bot-token and discord.channel-id, and the bot's rights in the channel
+adresse de webhook Discord attendue (https://discord.com/api/webhooks/<id>/<jeton>)	Discord webhook URL expected (https://discord.com/api/webhooks/<id>/<token>)
+jeton du bot attendu (portail des developpeurs Discord, onglet Bot)	bot token expected (Discord developer portal, Bot tab)
+identifiant de salon Discord attendu (nombre), recu : {0}	Discord channel id expected (number), got: {0}
+evenement inconnu '{0}' (possibles : deposit, withdraw, reset)	unknown event '{0}' (possible: deposit, withdraw, reset)
+ERREUR	ERROR
+AVERTISSEMENT	WARNING
+Commentaires de config.yml mis dans la langue de language (ancien fichier : {0})	config.yml comments switched to the language of language (old file: {0})
+Attente de verrou negative : {0}	Negative lock wait: {0}
+Aucun artefact pour le pilote {0}	No artifact for driver {0}
+Aucun depot de telechargement	No download repository
+Aucune reponse au PING de controle	No answer to the control PING
+Banque de l'operation introuvable : {0}	Bank of the operation not found: {0}
+Banque introuvable apres insertion : {0}	Bank not found after insertion: {0}
+Banque lue deux fois : {0}	Bank read twice: {0}
+Bloc invalide pour la section '{0}'	Invalid block for section '{0}'
+Bytecode introuvable : {0}	Bytecode not found: {0}
+Chaine Redis tronquee	Truncated Redis string
+Chaine Redis trop longue : {0}	Redis string too long: {0}
+Champ {0} invalide : '{1}'	Invalid field {0}: '{1}'
+Chemin lu comme secret mais absent de SecretPaths : {0}	Path read as secret but missing from SecretPaths: {0}
+Chemin vide ou valeur sur plusieurs lignes : {0}	Empty path or multi-line value: {0}
+Choix d'item incoherent : {0} / {1}	Inconsistent item choice: {0} / {1}
+Cible inaccessible : {0} (rien n'a ete copie)	Target unreachable: {0} (nothing was copied)
+CommandMap inaccessible : {0}	CommandMap unreachable: {0}
+CommandMap inaccessible sur {0} : {1}	CommandMap unreachable on {0}: {1}
+Commande de controle invalide	Invalid control command
+Configuration initiale invalide	Invalid initial configuration
+Configuration presente si et seulement si aucune erreur	Configuration present if and only if there is no error
+Confirmation d'abonnement inattendue	Unexpected subscription confirmation
+Conflit d'ecriture persistant ({0}), rien n'a ete ecrit	Persistent write conflict ({0}), nothing was written
+Connexion fermee par le serveur	Connection closed by the server
+Connexion impossible au serveur SQL {0} : {1}{2}	Cannot connect to SQL server {0}: {1}{2}
+Copie des commentaires de {0} impossible	Cannot copy the comments of {0}
+Copie interrompue : {0} ; la cible contient une copie partielle a vider avant toute nouvelle tentative	Copy interrupted: {0}; the target holds a partial copy to empty before any new attempt
+Creation du dossier natif impossible : {0}	Cannot create the native folder: {0}
+Cycle de vie ferme : {0} refuse	Lifecycle closed: {0} refused
+Delai {0} invalide : {1}	Invalid delay {0}: {1}
+Delais de pool invalides : connexion {0} ms, duree de vie {1} ms	Invalid pool delays: connection {0} ms, lifetime {1} ms
+Depot invalide (hote requis ; identifiants, requete et fragment interdits) : {0}	Invalid repository (host required; credentials, query and fragment forbidden): {0}
+Depot non HTTP(S) : {0}	Non HTTP(S) repository: {0}
+Desinscription du pilote {0} impossible	Cannot unregister driver {0}
+Deux migrations depuis la version {0}	Two migrations from version {0}
+Donnees {0} deja utilisees par un autre serveur{1} (verrou {2}) : un stockage YAML/JSON ne sert qu'un seul serveur a la fois (utilisez MySQL, MariaDB ou MongoDB pour plusieurs serveurs)	Data {0} already used by another server{1} (lock {2}): a YAML/JSON storage serves only one server at a time (use MySQL, MariaDB or MongoDB for several servers)
+Dossier de donnees {0} non creable : {1}	Cannot create data folder {0}: {1}
+Dossier des bibliotheques inutilisable ({0}) : {1}	Libraries folder unusable ({0}): {1}
+Duree negative : {0}	Negative duration: {0}
+Ecriture du journal impossible : {0}	Cannot write the log: {0}
+Ecriture refusee : NovaBank est en maintenance (migration du stockage)	Write refused: NovaBank is in maintenance (storage migration)
+En-tete YAML inaccessible	YAML header unreachable
+Entier Redis invalide	Invalid Redis integer
+Entree de journal absente : {0}	Missing log entry: {0}
+Entree de journal hors cible : {0}	Log entry outside the target: {0}
+Entree de journal invalide : {0}	Invalid log entry: {0}
+Erreur Redis : {0}	Redis error: {0}
+Erreur de base de donnees ({0}) : {1}	Database error ({0}): {1}
+Extraction du module {0} impossible ({1}) : {2}	Cannot extract module {0} ({1}): {2}
+Fermeture du chargeur du module {0} impossible	Cannot close the loader of module {0}
+Fermeture du chargeur du pilote {0} impossible	Cannot close the loader of driver {0}
+Fermeture du client MongoDB impossible : {0}	Cannot close the MongoDB client: {0}
+Fermeture du stockage SQL impossible : {0}	Cannot close the SQL storage: {0}
+Fermeture du stockage {0} impossible : {1}	Cannot close storage {0}: {1}
+Fichier de verrou {0} inaccessible : {1}	Lock file {0} unreachable: {1}
+Fin de ligne Redis invalide	Invalid Redis line ending
+Hote SQL invalide : '{0}'	Invalid SQL host: '{0}'
+Identifiant de serveur invalide pour la synchronisation	Invalid server id for synchronisation
+Identifiant de serveur vide	Empty server id
+Identifiants a passer dans les proprietes de connexion	Credentials must be passed in the connection properties
+Import refuse : {0} deja presente	Import refused: {0} already present
+Impossible d'obtenir {0} ; echecs : {1}	Cannot get {0}; failures: {1}
+Impossible d'ouvrir la base SQLite {0} : {1}	Cannot open SQLite database {0}: {1}
+Instanciation du pilote {0} ({1}) impossible : {2}	Cannot instantiate driver {0} ({1}): {2}
+Item en double dans le catalogue : {0}	Duplicate item in the catalogue: {0}
+JSON : cle en double '{0}'	JSON: duplicate key '{0}'
+JSON : contenu inattendu apres l'objet racine	JSON: unexpected content after the root object
+JSON : objet attendu a la racine	JSON: object expected at the root
+JSON : valeur inattendue ({0})	JSON: unexpected value ({0})
+La cible n'est pas vide : migration refusee, rien n'a ete copie (videz la base ou le dossier cible)	The target is not empty: migration refused, nothing was copied (empty the target database or folder)
+La mutation a change l'identite de la banque : {0}	The mutation changed the identity of the bank: {0}
+La source a change pendant la copie ({0}) ; la cible contient une copie perimee a vider	The source changed during the copy ({0}); the target holds an outdated copy to empty
+Le pilote {0} ne reconnait pas l'URL {1}	Driver {0} does not recognise the URL {1}
+Le schema de la base (version {0}) est plus recent que celui de cette version de NovaBank (version {1}) : mettez NovaBank a jour ou restaurez une sauvegarde de la base.	The database schema (version {0}) is newer than that of this NovaBank version (version {1}): update NovaBank or restore a database backup.
+Lecture des commentaires de {0} impossible	Cannot read the comments of {0}
+Lecture impossible de {0}	Cannot read {0}
+Lecture impossible du script {0}	Cannot read script {0}
+Ligne Redis trop longue	Redis line too long
+Limites invalides : {0} / {1}	Invalid limits: {0} / {1}
+Migration hors bornes : depuis la version {0}	Migration out of range: from version {0}
+Migration manquante depuis la version {0}	Missing migration from version {0}
+Module {0} : instanciation de {1} impossible : {2}	Module {0}: cannot instantiate {1}: {2}
+Module {0} : la ressource {1} ne correspond pas a sa somme (recue {2})	Module {0}: resource {1} does not match its checksum (got {2})
+Module {0} : lecture de la somme impossible	Module {0}: cannot read the checksum
+Module {0} : ressource {1} absente du jar du plugin	Module {0}: resource {1} missing from the plugin jar
+Module {0} : somme SHA-256 invalide apres extraction ({1})	Module {0}: invalid SHA-256 checksum after extraction ({1})
+Module {0} : somme {1} absente du jar du plugin	Module {0}: checksum {1} missing from the plugin jar
+Module {0} : somme {1} illisible	Module {0}: checksum {1} unreadable
+Module {0} : {1} n'est pas fournie par le jar du module	Module {0}: {1} is not provided by the module jar
+Module {0} : {1} n'implemente pas {2}	Module {0}: {1} does not implement {2}
+MongoDB : attente d'une operation en cours interrompue	MongoDB: wait for an operation in progress interrupted
+MongoDB : attente interrompue entre deux tentatives	MongoDB: wait between two attempts interrupted
+MongoDB : banque de l'operation {0} introuvable : {1}	MongoDB: bank of operation {0} not found: {1}
+MongoDB : banque introuvable apres creation : {0}	MongoDB: bank not found after creation: {0}
+MongoDB : banque {0} modifiee pendant la lecture (operation en attente)	MongoDB: bank {0} changed during the read (pending operation)
+MongoDB : banque {0} sans cesse modifiee pendant la lecture	MongoDB: bank {0} constantly changed during the read
+MongoDB : evolution de l'operation {0} annulee (journal incoherent)	MongoDB: progress of operation {0} cancelled (inconsistent log)
+MongoDB : operation disparue du journal : {0}	MongoDB: operation gone from the log: {0}
+MongoDB : operation {0} annulee mais absente du journal	MongoDB: operation {0} cancelled but missing from the log
+MongoDB : operation {0} signalee en double mais introuvable	MongoDB: operation {0} reported as duplicate but not found
+MongoDB : schema v{0} plus recent que celui de cette version de NovaBank (v{1}) : mettez NovaBank a jour	MongoDB: schema v{0} newer than that of this NovaBank version (v{1}): update NovaBank
+MongoDB : {0} impossible : {1}	MongoDB: {0} failed: {1}
+Mutation hors du verrou exclusif	Mutation outside the exclusive lock
+Namespace d'items deja gere : {0}	Item namespace already handled: {0}
+Nom de base SQL invalide : '{0}'	Invalid SQL database name: '{0}'
+Nombre d'essais hors bornes (1 a {0}) : {1}	Number of attempts out of range (1 to {0}): {1}
+Nombre d'unites negatif : {0}	Negative number of units: {0}
+Operation disparue du journal : {0}	Operation gone from the log: {0}
+Option de connexion '{0}' interdite : utiliser storage.sql.username / storage.sql.password	Connection option '{0}' forbidden: use storage.sql.username / storage.sql.password
+Page de journal invalide : offset {0}, limite {1}	Invalid log page: offset {0}, limit {1}
+Page invalide : {0}	Invalid page: {0}
+Parametre de stockage manquant : {0}	Missing storage parameter: {0}
+Parametre de stockage {0} : URI MongoDB invalide (attendu : mongodb://... ou mongodb+srv://...)	Storage parameter {0}: invalid MongoDB URI (expected: mongodb://... or mongodb+srv://...)
+Parametre de stockage {0} hors de [{1}, {2}] : {3}	Storage parameter {0} outside [{1}, {2}]: {3}
+Parametre de stockage {0} invalide : {1}	Invalid storage parameter {0}: {1}
+Parametre de stockage {0} non entier : {1}	Storage parameter {0} is not an integer: {1}
+Part {0} hors de [0, {1}]	Share {0} outside [0, {1}]
+Pas d'implementation de {0}	No implementation of {0}
+Pas de journalisation java.util.logging	No java.util.logging logging
+Pause entre essais negative : {0}	Negative pause between attempts: {0}
+Periode non positive : {0}	Non positive period: {0}
+Placeholders attendus par paires nom, valeur	Placeholders expected as name, value pairs
+Planificateur Folia indisponible ({0}) : {1}	Folia scheduler unavailable ({0}): {1}
+Port SQL invalide : {0}	Invalid SQL port: {0}
+Prix negatif au catalogue pour {0} : {1}	Negative catalogue price for {0}: {1}
+Quantite a livrer non positive : {0}	Non positive quantity to deliver: {0}
+Quantite invalide : {0}	Invalid quantity: {0}
+Quantite remise hors bornes : {0} / {1}	Handed-over quantity out of range: {0} / {1}
+Quantite remise non positive : {0}	Non positive handed-over quantity: {0}
+Quantites negatives : {0} / {1}	Negative quantities: {0} / {1}
+Reglages Redis invalides : {0}	Invalid Redis settings: {0}
+Reglages de synchronisation invalides : {0}, {1}, {2}	Invalid synchronisation settings: {0}, {1}, {2}
+Rejeu signale pour une operation nouvelle	Replay reported for a new operation
+Relecture de la source impossible : {0} ; la cible contient une copie non verifiee a vider	Cannot read the source again: {0}; the target holds an unverified copy to empty
+Reponse inattendue a AUTH	Unexpected answer to AUTH
+Reponse inattendue a PUBLISH	Unexpected answer to PUBLISH
+Ressource de module invalide : {0}	Invalid module resource: {0}
+Ressource {0} absente du JAR	Resource {0} missing from the JAR
+Ressource {0} illisible	Resource {0} unreadable
+Retrait non reserve : {0} ({1})	Withdrawal not reserved: {0} ({1})
+SHA-256 absent du JDK	SHA-256 missing from the JDK
+SHA-256 indisponible	SHA-256 unavailable
+Script de migration absent : {0}	Missing migration script: {0}
+Section non deployable : {0}	Section not deployable: {0}
+Seuils de compaction invalides : {0} octets, {1}	Invalid compaction thresholds: {0} bytes, {1}
+Stock insuffisant : {0} > {1}	Not enough stock: {0} > {1}
+Stockage {0} ferme	Storage {0} closed
+Stockage {0} hors service depuis un echec d'ecriture ({1}) : redemarrez le serveur	Storage {0} out of service since a write failure ({1}): restart the server
+Stockage {0} hors service depuis un echec d'ecriture : {1}	Storage {0} out of service since a write failure: {1}
+Stockage {0} illisible dans {1} : {2} (aucune donnee modifiee)	Storage {0} unreadable in {1}: {2} (no data changed)
+Suivi de retrait negatif	Negative withdrawal tracking
+Table des commandes inaccessible : {0}	Command table unreachable: {0}
+Table des commandes introuvable dans {0}	Command table not found in {0}
+Tableau Redis trop grand ou trop imbrique	Redis array too large or too nested
+Taille d'artefact hors bornes : {0}	Artifact size out of range: {0}
+Taille de page invalide : {0}	Invalid page size: {0}
+Taille de pool invalide : max {0}, min {1}	Invalid pool size: max {0}, min {1}
+Taille de pool invalide : {0}	Invalid pool size: {0}
+Telechargement interrompu	Download interrupted
+Tentatives invalides : {0} / {1}	Invalid attempts: {0} / {1}
+Threads et capacite doivent etre >= 1 : {0}, {1}	Threads and capacity must be >= 1: {0}, {1}
+Trame Redis inconnue : type {0}	Unknown Redis frame: type {0}
+Un fournisseur gere deja le type d'entite '{0}'	A provider already handles entity type '{0}'
+Une acceptation modifie la banque	An acceptance changes the bank
+Unites comptees negatives : {0}	Negative counted units: {0}
+Valeur cumulee negative : {0}	Negative accumulated value: {0}
+Verification en echec : {0} ; la cible contient une copie incorrecte a vider	Check failed: {0}; the target holds a wrong copy to empty
+Verification impossible : {0} ; la cible contient une copie non verifiee a vider	Cannot check: {0}; the target holds an unverified copy to empty
+Verrou de migration '{0}' : erreur du serveur	Migration lock '{0}': server error
+Verrou de migration '{0}' non obtenu en {1} s : un autre serveur migre-t-il la base ?	Migration lock '{0}' not obtained in {1} s: is another server migrating the database?
+Verrou {0} impossible : {1}	Lock {0} failed: {1}
+Version cible invalide : {0}	Invalid target version: {0}
+Version negative : {0}.{1}.{2}	Negative version: {0}.{1}.{2}
+Version ou epoch negative : {0} / {1}	Negative version or epoch: {0} / {1}
+Version ou erreur, exactement une des deux	Version or error, exactly one of the two
+YAML : cle en double '{0}'	YAML: duplicate key '{0}'
+YAML : cle non textuelle ligne {0}	YAML: non text key line {0}
+YAML : ecriture impossible : {0}	YAML: cannot write: {0}
+YAML : limite de taille de SnakeYAML non relevable : {0}	YAML: cannot raise the SnakeYAML size limit: {0}
+YAML : noeud inattendu ligne {0}	YAML: unexpected node line {0}
+YAML : table attendue a la racine	YAML: map expected at the root
+YAML : valeur binaire invalide ligne {0}	YAML: invalid binary value line {0}
+YAML invalide : {0}	Invalid YAML: {0}
+cible indisponible : {0}	target unavailable: {0}
+contenu inattendu a la position {0}	unexpected content at position {0}
+donnees persistantes de l'ile indisponibles	persistent island data unavailable
+ecritures toujours en cours apres {0} ms	writes still in progress after {0} ms
+erreur inattendue : {0}	unexpected error: {0}
+executeur d'entrees/sorties sature, reessayez	I/O executor saturated, try again
+limit doit etre strictement positif : {0}	limit must be strictly positive: {0}
+limit negatif : {0}	negative limit: {0}
+migration interrompue (arret du serveur)	migration interrupted (server shutdown)
+multiplier negatif : {0}	negative multiplier: {0}
+redis.enabled : le stockage actif ne fournit pas de flux de changements et ne peut pas etre partage entre serveurs (utilisez MYSQL, MARIADB ou MONGODB)	redis.enabled: the active storage provides no change feed and cannot be shared between servers (use MYSQL, MARIADB or MONGODB)
+storage.mongodb : {0}	storage.mongodb: {0}
+storage.sql : {0}	storage.sql: {0}
+table attendue	map expected
+{0} : date ISO-8601 attendue, lu '{1}'	{0}: ISO-8601 date expected, read '{1}'
+{0} : entier attendu, lu '{1}'	{0}: integer expected, read '{1}'
+{0} : format '{1}' inconnu (attendu : {2})	{0}: unknown format '{1}' (expected: {2})
+{0} : item en double {1}	{0}: duplicate item {1}
+{0} : ligne {1} : sequence {2} non continue	{0}: line {1}: sequence {2} not continuous
+{0} : ligne {1} invalide suivie d'autres lignes (fichier corrompu)	{0}: invalid line {1} followed by other lines (corrupted file)
+{0} : ligne {1} manquante (lu {2})	{0}: line {1} missing (read {2})
+{0} : liste attendue	{0}: list expected
+{0} : sequence invalide	{0}: invalid sequence
+{0} : table attendue	{0}: map expected
+{0} : texte attendu{1}	{0}: text expected{1}
+{0} : version de format {1} non geree par cette version de NovaBank ({2}) : mettez NovaBank a jour	{0}: format version {1} not handled by this NovaBank version ({2}): update NovaBank
+{0} a la position {1}	{0} at position {1}
+{0} inferieur a 1 s : {1}	{0} below 1 s: {1}
+{0} n'est pas un pilote JDBC	{0} is not a JDBC driver
+{0} operation(s) joueur toujours en cours apres {1} ms	{0} player operation(s) still in progress after {1} ms
+Prefixe de tables invalide (attendu [a-z][a-z0-9_]{0,31}) : '{0}'	Invalid table prefix (expected [a-z][a-z0-9_]{0,31}): '{0}'
+{0} : {1}	{0}: {1}

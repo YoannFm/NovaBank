@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>dev.novadev.novabank</groupId>
+        <artifactId>novabank-parent</artifactId>
+        <version>2026.11.23 (1.0.0 #1)</version>
+    </parent>
+
+    <artifactId>novabank-libraries</artifactId>
+    <name>NovaBank Libraries</name>
+    <description>Telechargement (SHA-256 epingles) et chargement isole des pilotes de base de donnees au demarrage (decision D6).</description>
+
+    <properties>
+        <!-- Valeur par defaut, completee par l'agent JaCoCo (prepare-agent). -->
+        <argLine></argLine>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>dev.novadev.novabank</groupId>
+            <artifactId>novabank-config</artifactId>
+        </dependency>
+
+        <!-- Sondes Bukkit/Paper/Spigot/BungeeCord de la regle d'architecture. -->
+        <dependency>
+            <groupId>dev.novadev.novabank</groupId>
+            <artifactId>novabank-core</artifactId>
+            <type>test-jar</type>
+        </dependency>
+        <!-- Test reseau : le pilote telecharge est branche sur le vrai stockage SQL. -->
+        <dependency>
+            <groupId>dev.novadev.novabank</groupId>
+            <artifactId>novabank-storage-sql</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- Meme pilote present cote parent, comme sur Spigot/Paper : prouve le child-first. -->
+        <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-nop</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.tngtech.archunit</groupId>
+            <artifactId>archunit-junit5</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <!-- Versions du POM parent lues par les tests (pilote MongoDB epingle). -->
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+            </testResource>
+        </testResources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <!-- Le pilote SQLite telecharge charge sa bibliotheque native (System.load) :
+                         acces natif autorise explicitement pour le JDK 25.
+                         Tests reseau (tag "network") desactivables : -DexcludedGroups=network -->
+                    <argLine>@{argLine} --enable-native-access=ALL-UNNAMED</argLine>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

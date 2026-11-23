@@ -1,0 +1,353 @@
+# =====================================================================
+#  NovaBank - configuration principale
+# =====================================================================
+# Les valeurs secretes (mots de passe, URI MongoDB) ne se modifient QUE dans
+# ce fichier ou dans le menu des reglages : elles sont refusees par commande et masquees (****)
+# a l'affichage et dans les logs.
+# Une cle absente prend sa valeur par defaut (celle indiquee ici).
+# Une cle inconnue est signalee au demarrage (faute de frappe probable).
+
+# Version du schema de ce fichier. Geree par NovaBank : ne pas modifier. Quand une mise a jour
+# de NovaBank apporte de nouvelles cles, elles sont ajoutees a ce fichier au demarrage, vos
+# valeurs restant inchangees (ancien fichier sauvegarde dans backup/, cles obsoletes signalees).
+# Serveurs 1.17 : Bukkit ne sait pas conserver les commentaires, le fichier reecrit n'en a plus
+# (l'original commente reste dans backup/).
+config-version: 7
+
+# Langue des messages et de la console : fichier plugins/NovaBank/lang/<langue>.yml (fr et en fournis).
+# Les cles absentes de votre fichier reprennent le texte fourni avec NovaBank. Passer a en puis recharger
+# traduit aussi les commentaires de ce fichier en anglais (valeurs inchangees, ancien fichier dans backup/).
+language: fr
+
+# ---------------------------------------------------------------------
+# Identite de ce serveur
+# ---------------------------------------------------------------------
+server:
+  # Identifiant unique de ce serveur dans le reseau (minuscules, chiffres, _ ou -).
+  id: main
+  # Groupe de serveurs qui partagent les memes banques.
+  group: default
+
+# ---------------------------------------------------------------------
+# Stockage des banques
+# ---------------------------------------------------------------------
+storage:
+  # YAML, JSON ou SQLITE : un seul serveur (incompatible avec Redis).
+  # MYSQL, MARIADB ou MONGODB : plusieurs serveurs possibles.
+  type: SQLITE
+
+  # MySQL / MariaDB (les deux utilisent le pilote MariaDB telecharge au demarrage).
+  sql:
+    host: localhost
+    port: 3306
+    database: novabank
+    username: novabank
+    password: ""
+    pool:
+      # Nombre maximal de connexions (1 a 100).
+      max-size: 10
+      # Connexions inactives conservees (0 a max-size).
+      min-idle: 2
+      # Attente maximale d'une connexion, en millisecondes (250 minimum).
+      connection-timeout-ms: 30000
+      # Duree de vie maximale d'une connexion, en millisecondes (30000 minimum).
+      max-lifetime-ms: 1800000
+    # Options du pilote MariaDB Connector/J (nom: valeur), jamais d'identifiants ici.
+    # Chiffrement (recommande hors machine locale) :
+    #   sslMode: verify-full          (verifie le certificat et le nom du serveur)
+    #   serverSslCert: /chemin/ca.pem (certificat de l'autorite, si non reconnu par Java)
+    # MySQL 8+ sans SSL : la connexion echoue ("RSA public key is not available") ; activer
+    # sslMode, ou sur un reseau de confiance uniquement : allowPublicKeyRetrieval: "true".
+    # Autres exemples : socketTimeout: "60000" (ms, delai maximal d'une requete).
+    options: {}
+
+  # SQLite : chemin du fichier, relatif au dossier du plugin.
+  sqlite:
+    file: data/novabank.db
+
+  # YAML / JSON : dossier des donnees, relatif au dossier du plugin (novabank.yml ou
+  # novabank.json, son journal d'ecriture novabank.<ext>.journal et un verrou novabank.<ext>.lock
+  # qui interdit l'ouverture par un second serveur). Conseille jusqu'a environ 100 000 operations
+  # au journal (tout est garde en memoire) ; au-dela, preferez SQLITE (/novabank migrate sqlite).
+  file:
+    directory: data
+
+  # MongoDB (module embarque, pilote officiel telecharge au demarrage). L'URI peut contenir
+  # identifiants et options :
+  #   mongodb://utilisateur:motdepasse@hote:27017/?authSource=admin
+  # Replica set (recommande) : transactions multi-documents. Serveur autonome : accepte, avec un
+  # journal en attente par banque garantissant l'absence de perte et de double application.
+  #   mongodb://hote1:27017,hote2:27017/?replicaSet=rs0
+  mongodb:
+    uri: "mongodb://localhost:27017"
+    database: novabank
+    # Delais en millisecondes (100 a 300000) : connexion, recherche d'un serveur utilisable
+    # (primaire), attente d'une reponse.
+    connect-timeout-ms: 5000
+    server-selection-timeout-ms: 10000
+    socket-timeout-ms: 30000
+
+  # YAML / JSON : chaque operation est ecrite et synchronisee sur le disque dans le journal
+  # d'ecriture avant d'etre confirmee. Le fichier YAML/JSON complet est reecrit (compaction du
+  # journal) a l'arret, quand le journal depasse 4 Mio, ou au plus tard apres cet intervalle
+  # (en secondes) s'il y a eu des operations.
+  save-interval-seconds: 300
+
+  # Pilotes BDD telecharges au premier demarrage. Leur empreinte SHA-256 est
+  # toujours verifiee (non desactivable).
+  drivers:
+    directory: libs
+
+# ---------------------------------------------------------------------
+# Synchronisation multi-serveur (Redis)
+# ---------------------------------------------------------------------
+# Exige un stockage MYSQL, MARIADB ou MONGODB partage par tous les serveurs.
+redis:
+  enabled: false
+  host: localhost
+  port: 6379
+  # Laisser vide si Redis n'a pas de mot de passe.
+  password: ""
+  database: 0
+  ssl: false
+  # Prefixe des canaux Redis (utile si plusieurs reseaux partagent un Redis).
+  channel-prefix: novabank
+  # Delais en millisecondes (100 a 60000).
+  connect-timeout-ms: 2000
+  socket-timeout-ms: 2000
+  # Nom de ce serveur dans le reseau (affiche par le diagnostic). Peut etre identique sur
+  # plusieurs serveurs : l'identifiant technique est aleatoire a chaque demarrage.
+  server-name: server
+  # Redis accelere la propagation ; la base de donnees reste la reference. Toutes les
+  # poll-interval-seconds, chaque serveur relit dans la base les banques modifiees ailleurs
+  # (rattrape les messages perdus et les coupures Redis). overlap-seconds : recouvrement de
+  # ces lectures, a garder superieur a l'ecart maximal entre les horloges des serveurs.
+  poll-interval-seconds: 5
+  overlap-seconds: 30
+  # Deploiement de la configuration modifiee en jeu (/novabank gui, items, config set) : ce serveur envoie
+  # les sections partagees (banks, items, limits, security, commands, gui, leaderboards, diagnostics, language) aux
+  # autres serveurs, qui les valident, sauvegardent leur config.yml dans backup/ puis les appliquent, et il
+  # applique celles qu'ils envoient. Jamais storage, redis, server ni secret. false : chaque serveur reste local.
+  deploy-config: true
+
+# ---------------------------------------------------------------------
+# Banques
+# ---------------------------------------------------------------------
+banks:
+  # Types de banques actives. "player" = banque personnelle ; les autres types
+  # exigent le plugin correspondant : island (SuperiorSkyblock2, BentoBox), land (Lands), ou tout
+  # type fourni par un autre plugin via l'API de NovaBank.
+  entity-types:
+    - player
+  # Ordre de choix de la banque active par defaut d'un joueur qui en a plusieurs.
+  # Chaque entree doit figurer dans entity-types.
+  default-priority:
+    - player
+  # DERIVED : valeur = blocs x prix actuel (un changement de prix s'applique a tous).
+  # ACCUMULATED : valeur figee au prix du depot.
+  valuation-mode: DERIVED
+  # Blocs d'un retrait qui n'ont pas pu etre remis (inventaire plein, deconnexion) :
+  # PENDING_DELIVERY : remis plus tard au joueur ; RETURN_TO_BANK : rendus a la banque.
+  undelivered-policy: PENDING_DELIVERY
+  # Droits par type de banque : roles autorises a deposer et a retirer.
+  # Roles : owner (proprietaire), admin (gestionnaire), member (membre).
+  # Un type absent : depot pour tous les roles, retrait pour owner et admin.
+  roles:
+    player:
+      deposit: [owner, admin, member]
+      withdraw: [owner, admin]
+
+# ---------------------------------------------------------------------
+# Items acceptes
+# ---------------------------------------------------------------------
+# key          : namespace:id (minecraft:... pour le vanilla).
+# price        : prix unitaire, ecrit entre guillemets pour etre lu exactement.
+# category     : optionnel (classements par categorie), minuscules, chiffres, _ ou -.
+# display-name : optionnel.
+# Un item inexistant dans la version du serveur, ou dont le plugin fournisseur
+# (ItemsAdder, Nexo, Oraxen...) est absent, est ignore avec un avertissement.
+items:
+  - key: minecraft:cobblestone
+    price: "0.1"
+    category: pierre
+  - key: minecraft:iron_block
+    price: "9"
+    category: minerais
+  - key: minecraft:gold_block
+    price: "18"
+    category: minerais
+  - key: minecraft:diamond_block
+    price: "90"
+    category: minerais
+    display-name: "Bloc de diamant"
+  - key: minecraft:emerald_block
+    price: "1.5"
+    category: minerais
+  # Exemple d'item custom (ItemsAdder) :
+  # - key: itemsadder:pack/ruby_block
+  #   price: "120"
+  #   category: custom
+  #   display-name: "Bloc de rubis"
+
+# ---------------------------------------------------------------------
+# Limites et securite
+# ---------------------------------------------------------------------
+limits:
+  # Quantite maximale deposee ou retiree en une operation (1 minimum).
+  max-quantity-per-operation: 2304
+  # Delai minimal entre deux operations d'un meme joueur, en millisecondes.
+  cooldown-ms: 500
+
+security:
+  # Sauvegarde les donnees du joueur (inventaire) juste apres chaque depot ou retrait
+  # valide en base : en cas de crash du serveur, l'inventaire revient a un etat qui
+  # reflete deja l'operation (protection anti-duplication). Recommande : true.
+  save-player-data: true
+  # A l'arret de NovaBank (arret du serveur, rechargement), attente maximale de la fin
+  # des depots et retraits en cours, en millisecondes (0 a 60000). Pendant cette phase,
+  # aucune nouvelle operation n'est acceptee et l'inventaire des joueurs n'est plus
+  # modifie : les items a rendre sont mis en livraison differee, un retrait non remis
+  # suit undelivered-policy.
+  shutdown-drain-timeout-ms: 10000
+
+# ---------------------------------------------------------------------
+# Commandes (redemarrage necessaire pour appliquer un changement)
+# ---------------------------------------------------------------------
+commands:
+  # Commande des joueurs : /bank deposit|withdraw|info|select
+  player:
+    name: bank
+    aliases: [banque]
+  # Commande d'administration : /novabank diagnostic|reload|bank|reset|history
+  admin:
+    name: novabank
+    aliases: []
+  # Commande de banque montee dans chaque plugin hote (extensions NovaBank pour SuperiorSkyblock2, BentoBox...).
+  # Iles, villes et clans : SOUS-COMMANDE de la commande du plugin (/is bank, /town bank, /clan bank) ;
+  # le nom peut reprendre celui d'une autre commande. Lands, GriefPrevention et WorldGuard n'acceptent pas
+  # de sous-commande : commande propre (/landbank...), nom distinct des autres commandes NovaBank.
+  # Si le plugin hote a deja une sous-commande de ce nom, la console le signale : changez le nom ici.
+  hosts:
+    superiorskyblock2:
+      name: bank
+      aliases: [banque]
+    bentobox:
+      name: bank
+      aliases: [banque]
+    iridiumskyblock:
+      # IridiumSkyblock a deja /is bank (sa banque d'argent).
+      name: coffre
+      aliases: [items]
+    towny:
+      name: bank
+      aliases: [banque]
+    simpleclans:
+      # SimpleClans a deja /clan bank (sa banque d'argent).
+      name: coffre
+      aliases: [items]
+    lands:
+      name: landbank
+      aliases: []
+    griefprevention:
+      name: claimbank
+      aliases: []
+    worldguard:
+      name: regionbank
+      aliases: []
+
+# ---------------------------------------------------------------------
+# GUI de banque (/bank ou /bank open)
+# ---------------------------------------------------------------------
+# Titre, noms et descriptions des boutons : fichiers de langue (section gui).
+gui:
+  # Nombre de lignes du coffre (2 a 6) : la derniere ligne porte les boutons,
+  # les autres affichent le stock (une page par ecran).
+  rows: 6
+  # Boutons : colonne de la derniere ligne (0 a 8) ou, pour les placer n'importe ou dans le coffre, "slot"
+  # (case 0 a 53, comptee depuis le haut a gauche ; remplace "column"). Cases distinctes. Le stock occupe les
+  # cases libres des autres lignes. Icone : item minecraft:... Editeur visuel en jeu : /novabank gui.
+  buttons:
+    info:
+      column: 0
+      icon: minecraft:book
+    previous:
+      column: 3
+      icon: minecraft:arrow
+    deposit-all:
+      column: 4
+      icon: minecraft:hopper
+    next:
+      column: 5
+      icon: minecraft:arrow
+    close:
+      column: 8
+      icon: minecraft:barrier
+  # Item des cases vides de la derniere ligne ("" : cases laissees vides).
+  filler: minecraft:gray_stained_glass_pane
+
+# ---------------------------------------------------------------------
+# Classements (un bloc par type de banque active)
+# ---------------------------------------------------------------------
+leaderboards:
+  player:
+    enabled: true
+    # Nombre d'entrees (1 a 1000).
+    size: 10
+    # Intervalle de recalcul, en secondes (5 minimum).
+    refresh-seconds: 60
+    # Classements supplementaires par categorie d'item.
+    per-category: false
+
+# ---------------------------------------------------------------------
+# Integrations : ce que NovaBank pousse vers d'autres plugins
+# ---------------------------------------------------------------------
+integrations:
+  superiorskyblock2:
+    # Ajoute la valeur de la banque de l'ile au niveau de l'ile dans SuperiorSkyblock2 (sans effet si le
+    # plugin est absent). NovaBank retient dans l'ile ce qu'il a deja ajoute : les bonus donnes par
+    # d'autres moyens ne sont jamais touches, et la valeur est resynchronisee a chaque operation.
+    island-level: false
+    # worth : bonus de valeur (le niveau en decoule par la formule de SuperiorSkyblock2) ;
+    # level : bonus de niveau, ajoute tel quel.
+    apply-to: worth
+    # Valeur de la banque x ce coefficient (zero ou plus).
+    multiplier: 1
+  bentobox:
+    # Ajoute la valeur de la banque de l'ile au niveau calcule par l'addon Level de BentoBox (sans effet si
+    # l'addon est absent). Le bonus est ajoute a chaque calcul du niveau (/is level, recalcul automatique) :
+    # niveau = niveau des blocs + valeur de la banque x coefficient, arrondi a l'entier inferieur.
+    island-level: false
+    # Valeur de la banque x ce coefficient (zero ou plus).
+    multiplier: 1
+
+# ---------------------------------------------------------------------
+# Salon Discord des operations
+# ---------------------------------------------------------------------
+# Propre a ce serveur : jamais envoye aux autres serveurs (le jeton et l'adresse sont secrets).
+discord:
+  enabled: false
+  # webhook : webhook du salon (Parametres du salon > Integrations > Webhooks > Copier l'URL) ;
+  # bot : un bot Discord deja invite sur le serveur Discord, avec les droits Voir le salon, Envoyer des messages
+  # et Integrer des liens dans le salon. Essai immediat : /novabank discord test.
+  mode: webhook
+  webhook-url: ""
+  bot-token: ""
+  # Identifiant du salon pour le mode bot (mode developpeur de Discord, clic droit sur le salon > Copier l'identifiant).
+  channel-id: ""
+  # Operations annoncees : deposit, withdraw, reset.
+  events: [deposit, withdraw]
+  # Types de banque annonces (player, island, town...) ; vide = tous.
+  bank-types: []
+  # Depots et retraits plus petits ignores.
+  min-quantity: 1
+  # Les operations sont regroupees : un message Discord au plus toutes les N secondes (1 a 3600).
+  batch-seconds: 5
+
+# ---------------------------------------------------------------------
+# Diagnostics
+# ---------------------------------------------------------------------
+diagnostics:
+  # Messages de debogage dans la console.
+  debug: false
+  # Journalise chaque depot / retrait dans la console.
+  log-operations: false

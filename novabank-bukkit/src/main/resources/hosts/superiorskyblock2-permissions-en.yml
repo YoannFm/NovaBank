@@ -1,0 +1,70 @@
+# SuperiorSkyblock2 permissions menu entries for the NovaBank privileges.
+# Copy both blocks below into plugins/SuperiorSkyblock2/menus/permissions.yml, under "permissions:",
+# at the same level as "deposit_money:" (two spaces), then /is admin reload or restart the server.
+# NovaBank writes this file once: your changes are kept.
+permissions:
+  novabank_deposit:
+    display-menu: true
+    permission-enabled:
+      type: CHEST
+      name: '&6Bank: deposit'
+      lore:
+        - '&7Deposit items into the island''s NovaBank bank.'
+        - '&7Currently &aENABLED&7.'
+    permission-disabled:
+      type: CHEST
+      name: '&6Bank: deposit'
+      lore:
+        - '&7Deposit items into the island''s NovaBank bank.'
+        - '&7Currently &cDISABLED&7.'
+    role-permission:
+      type: CHEST
+      name: '&6Bank: deposit'
+      lore:
+        - '&7Deposit items into the island''s NovaBank bank.'
+        - '&7Role: &e{}&7.'
+        - ''
+        - '{0}'
+    has-access:
+      sound:
+        type: ENTITY_EXPERIENCE_ORB_PICKUP
+        volume: 0.2
+        pitch: 0.2
+    no-access:
+      sound:
+        type: BLOCK_ANVIL_PLACE
+        volume: 0.2
+        pitch: 0.2
+
+  novabank_withdraw:
+    display-menu: true
+    permission-enabled:
+      type: HOPPER
+      name: '&6Bank: withdraw'
+      lore:
+        - '&7Withdraw items from the island''s NovaBank bank.'
+        - '&7Currently &aENABLED&7.'
+    permission-disabled:
+      type: HOPPER
+      name: '&6Bank: withdraw'
+      lore:
+        - '&7Withdraw items from the island''s NovaBank bank.'
+        - '&7Currently &cDISABLED&7.'
+    role-permission:
+      type: HOPPER
+      name: '&6Bank: withdraw'
+      lore:
+        - '&7Withdraw items from the island''s NovaBank bank.'
+        - '&7Role: &e{}&7.'
+        - ''
+        - '{0}'
+    has-access:
+      sound:
+        type: ENTITY_EXPERIENCE_ORB_PICKUP
+        volume: 0.2
+        pitch: 0.2
+    no-access:
+      sound:
+        type: BLOCK_ANVIL_PLACE
+        volume: 0.2
+        pitch: 0.2

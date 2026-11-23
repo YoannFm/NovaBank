@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>dev.novadev.novabank</groupId>
+        <artifactId>novabank-parent</artifactId>
+        <version>2026.11.23 (1.0.0 #1)</version>
+    </parent>
+
+    <artifactId>novabank-host-lands</artifactId>
+    <name>NovaBank pour Lands (extension)</name>
+    <description>Flags de role Lands novabank_deposit et novabank_withdraw (Java 21, comme Lands). Le JAR vendu est assemble par novabank-editions.</description>
+
+    <properties>
+        <!-- Lands 7.26 est compile en Java 21 : ses classes ne se lisent pas en release 17. -->
+        <maven.compiler.release>21</maven.compiler.release>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>jitpack</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+    <dependencies>
+        <dependency>
+            <groupId>dev.novadev.novabank</groupId>
+            <artifactId>novabank-bukkit</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <!-- Annotations de l'API Lands (sinon avertissement, refuse par -Werror). -->
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>26.0.2</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- API de l'hote, depot public (jitpack) ; transitives exclues : seules ses classes servent a compiler. -->
+        <dependency>
+            <groupId>com.github.angeschossen</groupId>
+            <artifactId>LandsAPI</artifactId>
+            <version>7.25.4</version>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+    <build>
+        <!-- JAR intermediaire (classe d'entree seule, sans moteur) : ne pas installer sur un serveur, prendre
+             novabank-editions/target/editions/NovaBank-<Hote>-*.jar. -->
+        <finalName>${project.artifactId}-interne-${file.version}</finalName>
+    </build>
+</project>

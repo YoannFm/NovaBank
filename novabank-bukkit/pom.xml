@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>dev.novadev.novabank</groupId>
+        <artifactId>novabank-parent</artifactId>
+        <version>2026.11.23 (1.0.0 #1)</version>
+    </parent>
+
+    <artifactId>novabank-bukkit</artifactId>
+    <name>NovaBank Bukkit</name>
+    <description>Couche plateforme Bukkit : cycle de vie du plugin, detection version/plateforme, planificateur, chargement de la configuration, stockage, commande d'administration.</description>
+
+    <properties>
+        <!-- Valeur par defaut, completee par l'agent JaCoCo (prepare-agent). -->
+        <argLine></argLine>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>dev.novadev.novabank</groupId>
+            <artifactId>novabank-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dev.novadev.novabank</groupId>
+            <artifactId>novabank-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dev.novadev.novabank</groupId>
+            <artifactId>novabank-storage-sql</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dev.novadev.novabank</groupId>
+            <artifactId>novabank-storage-file</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dev.novadev.novabank</groupId>
+            <artifactId>novabank-sync-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dev.novadev.novabank</groupId>
+            <artifactId>novabank-libraries</artifactId>
+        </dependency>
+        <!-- API serveur : compilee contre 1.17.1 (version minimale, decision D7), fournie par le serveur. -->
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+        </dependency>
+        <!-- Expansion de placeholders : fournie par PlaceholderAPI, presente seulement si le plugin est installe. -->
+        <dependency>
+            <groupId>me.clip</groupId>
+            <artifactId>placeholderapi</artifactId>
+            <version>2.11.6</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>${snakeyaml-bukkit.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations-java5</artifactId>
+        </dependency>
+
+        <!-- Sondes Bukkit/Paper/Spigot/BungeeCord des regles d'architecture. -->
+        <dependency>
+            <groupId>dev.novadev.novabank</groupId>
+            <artifactId>novabank-core</artifactId>
+            <type>test-jar</type>
+        </dependency>
+        <!-- Pilote MariaDB de test : echec de connexion reel, version egale a DriverCatalog. -->
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.tngtech.archunit</groupId>
+            <artifactId>archunit-junit5</artifactId>
+        </dependency>
+    </dependencies>
+</project>

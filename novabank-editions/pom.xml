@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>dev.novadev.novabank</groupId>
+        <artifactId>novabank-parent</artifactId>
+        <version>2026.11.23 (1.0.0 #1)</version>
+    </parent>
+
+    <artifactId>novabank-editions</artifactId>
+    <packaging>pom</packaging>
+    <name>NovaBank - JAR vendus par plugin hote</name>
+    <description>Assemble, a partir du JAR NovaBank final, un JAR par plugin hote : module SuperiorSkyblock2, addon
+        BentoBox, plugins NovaBank-IridiumSkyblock, -Towny, -SimpleClans, -Lands, -GriefPrevention, -WorldGuard.
+        Meme moteur partout ; seuls changent le point d'entree, le descripteur et l'edition.</description>
+
+    <!-- Ordre du reacteur : le JAR final et les points d'entree sont construits avant. -->
+    <dependencies>
+        <dependency>
+            <groupId>dev.novadev.novabank</groupId>
+            <artifactId>novabank-plugin</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>dev.novadev.novabank</groupId>
+            <artifactId>novabank-host-lands</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>dev.novadev.novabank</groupId>
+            <artifactId>novabank-host-simpleclans</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>dev.novadev.novabank</groupId>
+            <artifactId>novabank-host-iridium</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>dev.novadev.novabank</groupId>
+            <artifactId>novabank-host-bentobox</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>dev.novadev.novabank</groupId>
+            <artifactId>novabank-host-superiorskyblock</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>assemble-editions</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <property name="base.jar"
+                                          value="${project.basedir}/../novabank-plugin/target/NovaBank-${file.version}.jar"/>
+                                <property name="out" value="${project.build.directory}/editions"/>
+                                <property name="work" value="${project.build.directory}/work"/>
+                                <mkdir dir="${out}"/>
+
+                                <!-- Module SuperiorSkyblock2 et addon BentoBox : pas de plugin.yml (BentoBox
+                                     prendrait l'addon pour un plugin) ; le descripteur du moteur reste lisible sous le
+                                     nom novabank-plugin.yml (version, permissions). -->
+                                <unzip src="${base.jar}" dest="${work}/base-descriptor">
+                                    <patternset includes="plugin.yml"/>
+                                </unzip>
+                                <copy file="${work}/base-descriptor/plugin.yml"
+                                      tofile="${work}/embedded/novabank-plugin.yml" overwrite="true"/>
+
+                                <!-- Module SuperiorSkyblock2 : la classe du module en PREMIER (SuperiorSkyblock2
+                                     s'arrete a la premiere classe illisible). -->
+                                <mkdir dir="${work}/superiorskyblock2"/>
+                                <echo file="${work}/superiorskyblock2/novabank-edition.txt" message="superiorskyblock2"/>
+                                <jar destfile="${out}/NovaBank-SuperiorSkyblock2-${file.version}.jar" duplicate="preserve">
+                                    <fileset dir="${project.basedir}/../novabank-host-superiorskyblock/target/classes"
+                                             includes="**/*.class"/>
+                                    <fileset dir="${work}/superiorskyblock2"/>
+                                    <fileset dir="${work}/embedded"/>
+                                    <zipfileset src="${base.jar}" excludes="META-INF/MANIFEST.MF,plugin.yml"/>
+                                </jar>
+
+                                <!-- Editions sous forme de plugin (NovaBank-<Hote>) : plugin.yml du moteur renomme,
+                                     dependant de son hote, SANS permissions (declarees par le moteur depuis
+                                     novabank-plugin.yml : deux plugins NovaBank ne les declarent pas deux fois), plus
+                                     l'extension compilee contre l'hote s'il y en a une. -->
+                                <macrodef name="plugin-edition">
+                                    <attribute name="edition"/>
+                                    <attribute name="host"/>
+                                    <attribute name="extension" default=""/>
+                                    <sequential>
+                                        <mkdir dir="${work}/@{edition}"/>
+                                        <echo file="${work}/@{edition}/novabank-edition.txt" message="@{edition}"/>
+                                        <copy file="${work}/base-descriptor/plugin.yml" tofile="${work}/@{edition}/plugin.yml"
+                                              overwrite="true">
+                                            <filterchain>
+                                                <tokenfilter>
+                                                    <filetokenizer/>
+                                                    <replaceregex pattern="(?s)\npermissions:.*" replace="&#10;"/>
+                                                    <replaceregex pattern="(?m)^name: NovaBank$"
+                                                                  replace="name: NovaBank-@{host}&#10;depend: [@{host}]"/>
+                                                </tokenfilter>
+                                            </filterchain>
+                                        </copy>
+                                        <mkdir dir="${work}/@{edition}-extension"/>
+                                        <copy todir="${work}/@{edition}-extension" failonerror="false">
+                                            <fileset dir="${project.basedir}/../@{extension}/target/classes" erroronmissingdir="false"/>
+                                        </copy>
+                                        <jar destfile="${out}/NovaBank-@{host}-${file.version}.jar" duplicate="preserve">
+                                            <fileset dir="${work}/@{edition}"/>
+                                            <fileset dir="${work}/@{edition}-extension"/>
+                                            <!-- Fichiers propres a l'edition (WorldGuard : declaration de son extension,
+                                                 incluse dans le moteur). -->
+                                            <fileset dir="${project.basedir}/src/editions/@{edition}" erroronmissingdir="false"/>
+                                            <fileset dir="${work}/embedded"/>
+                                            <zipfileset src="${base.jar}" excludes="META-INF/MANIFEST.MF,plugin.yml"/>
+                                        </jar>
+                                    </sequential>
+                                </macrodef>
+                                <plugin-edition edition="iridiumskyblock" host="IridiumSkyblock" extension="novabank-host-iridium"/>
+                                <plugin-edition edition="towny" host="Towny"/>
+                                <plugin-edition edition="simpleclans" host="SimpleClans" extension="novabank-host-simpleclans"/>
+                                <plugin-edition edition="lands" host="Lands" extension="novabank-host-lands"/>
+                                <plugin-edition edition="griefprevention" host="GriefPrevention"/>
+                                <plugin-edition edition="worldguard" host="WorldGuard"/>
+
+                                <!-- Addon BentoBox : addon.yml, langues des flags, classes de l'addon (Java 25). -->
+                                <mkdir dir="${work}/bentobox"/>
+                                <echo file="${work}/bentobox/novabank-edition.txt" message="bentobox"/>
+                                <jar destfile="${out}/NovaBank-BentoBox-${file.version}.jar" duplicate="preserve">
+                                    <fileset dir="${project.basedir}/../novabank-host-bentobox/target/classes"/>
+                                    <fileset dir="${work}/bentobox"/>
+                                    <fileset dir="${work}/embedded"/>
+                                    <zipfileset src="${base.jar}" excludes="META-INF/MANIFEST.MF,plugin.yml"/>
+                                </jar>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

@@ -1,0 +1,804 @@
+# =====================================================================
+#  NovaBank - textes en francais
+# =====================================================================
+# Couleurs : &0-&9, &a-&f, styles &l &o &n &m &k, &r ; couleurs hexadecimales &#RRGGBB.
+# Les {nom} sont remplaces par NovaBank. Une cle supprimee reprend le texte fourni.
+# Vos textes ne sont jamais modifies : quand une mise a jour de NovaBank apporte de nouvelles
+# cles, elles sont ajoutees a ce fichier au demarrage (ancien fichier sauvegarde dans
+# lang/backup/, cles obsoletes signalees en console).
+
+# Version de ce fichier. Geree par NovaBank : ne pas modifier.
+lang-version: 10
+
+# Format des nombres et des dates.
+locale: fr-FR
+date-format: "dd/MM/yyyy HH:mm"
+prefix: "&b&lNovaBank &8» &r"
+
+general:
+  no-permission: "&cVous n'avez pas la permission d'utiliser cette commande."
+  players-only: "&cCette commande est reservee aux joueurs."
+  usage: "Utilisation : &f{usage}"
+  unknown-subcommand: "&cSous-commande inconnue : {argument}. &rUtilisation : &f{usage}"
+  invalid-quantity: "&cQuantite invalide : {value} (nombre entier positif ou 'all')."
+  invalid-item: "&cItem invalide : {value}."
+  invalid-page: "&cPage invalide : {value}."
+  unknown-player: "&cJoueur inconnu : {player}."
+  storage-error: "&cBase de donnees indisponible, reessayez plus tard."
+  not-ready: "&eNovaBank n'est pas encore pret : reessayez dans un instant."
+
+bank:
+  description: "Banque de blocs NovaBank"
+  clan-description: "Banque d'items du clan (NovaBank)"
+  help:
+    - "&bNovaBank &b- commandes :"
+    - "&f/{label} deposit <item|hand|all> [quantite] &b: deposer des items"
+    - "&f/{label} withdraw <item> <quantite|all> &b: retirer des items"
+    - "&f/{label} info &b: banque active, valeur et stock"
+    - "&f/{label} select <type> &b: choisir la banque active"
+    - "&f/{label} top [type] &b: classement des banques"
+    - "&f/{label} &bou &f/{label} open &b: ouvrir la banque (GUI)"
+  help-scoped:
+    - "&bNovaBank &b- commandes :"
+    - "&f/{label} deposit <item|hand|all> [quantite] &b: deposer des items"
+    - "&f/{label} withdraw <item> <quantite|all> &b: retirer des items"
+    - "&f/{label} info &b: valeur et stock de la banque"
+    - "&f/{label} top [type] &b: classement des banques"
+    - "&f/{label} &bou &f/{label} open &b: ouvrir la banque (GUI)"
+  deposit:
+    success: "&aDepot de &f{quantity} {item}&a dans &f{bank}&a : &f+{value}&a (valeur : &f{total}&a)."
+    returned: "&e{quantity} {item} rendus : {reason}"
+    pending: "&e{quantity} {item} n'ont pas pu vous etre rendus (inventaire plein) : ils vous seront livres a votre prochaine connexion."
+  withdraw:
+    success: "&aRetrait de &f{quantity} {item}&a de &f{bank}&a : &f{value}&a (valeur : &f{total}&a)."
+    pending: "&e{quantity} {item} n'ont pas pu etre remis (inventaire plein) : ils vous seront livres a votre prochaine connexion."
+    returned: "&e{quantity} {item} n'ont pas pu etre remis (inventaire plein) et sont restes dans la banque."
+    confirmation-pending: "&c{quantity} {item} remis, mais l'operation n'a pas pu etre confirmee. Un administrateur a ete prevenu."
+  refusal:
+    busy: "&cUne operation est deja en cours, patientez."
+    cooldown: "&cPatientez encore {seconds} s avant une nouvelle operation."
+    no-permission: "&cVous n'avez pas la permission de faire cette operation."
+    no-bank: "&cVous n'avez acces a aucune banque."
+    role-not-allowed: "&cVotre role ne vous permet pas cette operation dans la banque {bank}."
+    not-accepted: "&cLa banque n'accepte pas {item}."
+    nothing-in-hand: "&cVous ne tenez aucun item deposable en main (les items renommes, enchantes ou abimes sont refuses)."
+    nothing-to-deposit: "&cVous n'avez aucun item deposable dans votre inventaire."
+    quantity-limit: "&cAu plus {max} unites par operation."
+    not-enough-items: "&cVous n'avez pas assez de {item} deposables (les items renommes, enchantes ou abimes sont refuses)."
+    insufficient-stock: "&cStock insuffisant de {item} dans la banque {bank}."
+    player-offline: "&cOperation annulee : vous vous etes deconnecte."
+    shutting-down: "&cNovaBank s'arrete : operation impossible pour le moment, vos items sont en securite."
+    maintenance: "&cNovaBank est en maintenance (migration des donnees) : operation impossible pour le moment, vos items sont en securite."
+    storage-error: "&cBase de donnees indisponible : rien n'a ete enregistre, vos items vous ont ete rendus."
+    refused: "&cOperation refusee par la banque ({reason})."
+    internal-error: "&cErreur inattendue : contactez un administrateur."
+  info:
+    header: "&bBanque active : &f{bank} &b({type})"
+    value: "&eValeur : &f{value}"
+    stock-header: "&eStock :"
+    stock-line: " &b- &f{item} &b: &f{quantity}"
+    stock-empty: "&eLa banque est vide."
+    others: "&eAutres banques : &f{banks} &b(/{label} select <type>)"
+    no-bank: "&cVous n'avez acces a aucune banque."
+  select:
+    success: "&aBanque active : &f{bank} &b({type})"
+    unknown-type: "&cType de banque inconnu : {type}. Types disponibles : {types}."
+    not-member: "&cVous n'appartenez a aucune banque de type {type}."
+  delivery:
+    delivered: "&a{quantity} item(s) en attente vous ont ete livres."
+    remaining: "&e{quantity} item(s) restent en attente (inventaire plein) : ils seront livres a votre prochaine connexion."
+
+leaderboard:
+  header: "&bClassement {type} &b(top {size})"
+  line: "&e#{rank} &f{name} &b- &f{value}"
+  line-self: "&e#{rank} {name} &b- &e{value} &b(vous)"
+  self: "&eVotre rang : &f#{rank} &b({value})"
+  unranked: "&eVotre banque n'est pas encore classee."
+  empty: "&eAucune banque classee."
+  disabled: "&cLes classements sont desactives."
+  unknown-type: "&cClassement inconnu : {type}. Disponibles : {types}."
+
+# GUI de banque (/bank). Placeholders des boutons : {bank} {value} {page} {pages}.
+gui:
+  title: "&8Banque : {bank}"
+  no-room: "&cPlus de place dans votre inventaire pour {item}."
+  stock:
+    name: "&f{item}"
+    lore:
+      - "&bQuantite : &f{quantity}"
+      - "&bValeur : &f{value}"
+      - ""
+      - "&eClic gauche &b: retirer une pile ({stack})"
+      - "&eClic droit &b: retirer 1"
+      - "&eMaj + clic &b: retirer tout ce qui tient"
+  buttons:
+    info:
+      name: "&b{bank}"
+      lore:
+        - "&bValeur : &f{value}"
+        - "&bPage &f{page}&b/&f{pages}"
+        - ""
+        - "&eClic &b: ce que rapporte chaque item"
+    previous:
+      name: "&bPage precedente"
+      lore:
+        - "&bPage &f{page}&b/&f{pages}"
+    next:
+      name: "&bPage suivante"
+      lore:
+        - "&bPage &f{page}&b/&f{pages}"
+    deposit-all:
+      name: "&aDeposer tout"
+      lore:
+        - "&bDepose tous les items acceptes"
+        - "&bde votre inventaire."
+    close:
+      name: "&cFermer"
+      lore: []
+  # Liste des items acceptes et de leur prix (clic sur le bouton Information).
+  prices:
+    title: "&8Ce que rapporte chaque item"
+    entry-name: "&f{item}"
+    entry-lore:
+      - "&bRapporte : &a{price} &bpar unite"
+      - "&bCategorie : &f{category}"
+    entry-lore-zero:
+      - "&cNe rapporte rien pour le moment"
+      - "&bCategorie : &f{category}"
+    previous: "&bPage precedente"
+    next: "&bPage suivante"
+    back: "&eRetour a la banque"
+
+# Accueil et aide de /novabank.
+help:
+  header: "&8&m        &r &b&lNovaBank &8&m        "
+  author: "&eAuteur &8» &f{author}"
+  version: "&eVersion &8» &f{version}"
+  description:
+    - "&eDescription &8» &bBanque virtuelle de blocs : deposez vos items acceptes, retirez-les quand vous voulez,"
+    - "&bet cumulez une valeur pour votre banque, celle de votre ile, ville ou clan. Classements et menu simple inclus."
+  discord: "&eDiscord &8» &b{url}"
+  github: "&eGitHub &8» &b{url}"
+  commands-title: "&b&lCommandes &8(&ecliquez pour pre-remplir&8)"
+  line: "&b{command} &8» &e{description}"
+  hover: "&eCliquez pour pre-remplir &b{command}"
+  hover-link: "&eCliquez pour ouvrir le lien"
+  desc:
+    open: "Ouvrir votre banque"
+    deposit: "Deposer des items"
+    withdraw: "Retirer des items"
+    info: "Banque active, valeur et stock"
+    select: "Choisir la banque active"
+    top: "Classement des banques"
+    help: "Afficher cette aide"
+    hub: "Menu d'administration"
+    diagnostic: "Etat du plugin et du stockage"
+    reload: "Recharger config.yml"
+    bank: "Voir la banque d'un joueur"
+    history: "Historique des operations d'un joueur"
+    reset: "Reinitialiser la valeur d'une banque"
+    transfer: "Transferer le stock d'une banque a une autre"
+    resync: "Recalculer le niveau de toutes les iles"
+    discord: "Envoyer un message d'essai dans le salon Discord"
+    migrate: "Migrer le stockage vers un autre type"
+    config: "Lire ou modifier la configuration"
+    gui: "Editeur visuel du GUI"
+    items: "Editeur des items et des prix"
+
+# Editeurs en jeu (/novabank gui, /novabank items).
+editor:
+  gui:
+    title: "&8NovaBank - editeur de GUI"
+    selected: " &a(en main)"
+    button-name: "&e{button}{selected}"
+    button-lore:
+      - "&bCase : &f{slot}"
+      - "&eClic gauche&b : prendre, puis poser"
+      - "&eClic droit&b : icone = objet tenu en main"
+    stock-name: "&bZone de stock"
+    stock-lore:
+      - "&bLes items de la banque s'affichent"
+      - "&bici, autour des boutons."
+    free-name: "&eCase libre"
+    free-lore:
+      - "&eClic gauche&b : poser le bouton ici"
+    buttons:
+      info: "Information"
+      previous: "Page precedente"
+      deposit-all: "Tout deposer"
+      next: "Page suivante"
+      close: "Fermer"
+  items:
+    title: "&8NovaBank - items acceptes ({page}/{pages})"
+    entry-name: "&f{item}"
+    entry-lore:
+      - "&bPrix : &f{price}"
+      - "&bCategorie : &f{category}"
+      - ""
+      - "&eClic&b : modifier le prix"
+      - "&eMajuscule + clic&b : retirer de la liste"
+    previous: "&bPage precedente"
+    next: "&bPage suivante"
+    info-name: "&bBrouillon"
+    info-clean: "&e{count} items, identique au fichier"
+    info-dirty: "&e{count} items\n&cModifie, pas encore enregistre\n&b/novabank items save"
+    add-name: "&aAjouter un item"
+    add-lore:
+      - "&bCliquez sur un item de votre inventaire"
+      - "&bpour l'ajouter (prix 1, a ajuster ensuite)"
+      - "&bou tenez-le en main puis cliquez ici"
+  confirm:
+    title: "&8NovaBank - confirmation"
+    cancel: "&c&lANNULER"
+    confirm: "&a&lCONFIRMER"
+  price:
+    title: "&8NovaBank - fiche de l'item"
+    minus: "&c-{amount}"
+    plus: "&a+{amount}"
+    item-name: "&e{item}"
+    item-lore:
+      - "&bPrix actuel : &f{price}"
+      - "&bCategorie : &f{category}"
+      - "&7{id}"
+    type-name: "&eSaisir le prix"
+    type-lore:
+      - "&bTapez le prix dans le chat"
+      - "&b(&eannuler&b pour abandonner)"
+    category-name: "&eChanger la categorie"
+    category-lore:
+      - "&bActuelle : &f{category}"
+      - "&bTapez-la dans le chat (&e-&b pour la retirer)"
+    name-name: "&eChanger le nom affiche"
+    name-lore:
+      - "&bActuel : &f{name}"
+      - "&bTapez-le dans le chat (&e-&b pour le retirer)"
+    delete-name: "&cSupprimer l'item"
+    delete-lore:
+      - "&cRetire l'item de la liste"
+    back: "&bRetour a la liste"
+  hub:
+    title: "&8NovaBank - administration"
+    state-clean: "&aA jour"
+    state-dirty: "&cModifie, pas encore enregistre"
+    items:
+      name: "&bItems et prix"
+      lore:
+        - "&b{count} items acceptes"
+        - "{state}"
+        - "&eClic&b : ouvrir l'editeur"
+    gui:
+      name: "&bDisposition du GUI"
+      lore:
+        - "&b{rows} lignes"
+        - "{state}"
+        - "&eClic&b : ouvrir l'editeur visuel"
+    rows:
+      name: "&eLignes du GUI : &f{rows}"
+      lore:
+        - "&eClic gauche&b : +1   &eClic droit&b : -1"
+    reset:
+      name: "&eDisposition par defaut"
+      lore:
+        - "&bRemet les boutons a leur place d'origine"
+        - "&b(dans le brouillon, pas encore enregistre)"
+    save:
+      name: "&aEnregistrer et deployer"
+      lore:
+        - "&bSauvegarde config.yml dans backup/, valide,"
+        - "&bapplique ici puis envoie aux autres serveurs"
+    save-nothing:
+      name: "&eEnregistrer"
+      lore:
+        - "&bRien a enregistrer"
+    cancel:
+      name: "&cAbandonner les changements"
+      lore:
+        - "&bEfface les brouillons non enregistres"
+    cancel-nothing:
+      name: "&eAbandonner"
+      lore:
+        - "&bAucun brouillon"
+    push:
+      name: "&bRenvoyer aux autres serveurs"
+      lore:
+        - "&bEnvoie la configuration actuelle par Redis"
+        - "&b(rattrape un serveur reste a l'ecart)"
+    reload:
+      name: "&bRecharger config.yml"
+      lore:
+        - "&bRelit le fichier sur ce serveur"
+    settings:
+      name: "&bParametres"
+      lore:
+        - "&bTous les autres reglages de config.yml"
+        - "{state}"
+        - "&eClic&b : ouvrir"
+
+# Menu des parametres (comparateur du menu d'administration).
+settings:
+  title: "&8NovaBank - parametres"
+  page-title: "&8Parametres - {category}"
+  back: "&eRetour"
+  back-hub: "&eRetour au menu d'administration"
+  back-hub-dirty: "&c{count} changement(s) non enregistre(s)\n&bEnregistrez depuis le menu d'administration"
+  clean: "&aA jour"
+  changed-count: "&c{count} changement(s) en attente"
+  value: "&bValeur : &f{value}"
+  modified: "&cModifie, pas encore enregistre"
+  restart: "&6Applique au redemarrage du serveur"
+  yes-label: "&aOui"
+  no-label: "&cNon"
+  empty: "&7(vide)"
+  secret-set: "&f******** &7(defini)"
+  secret-empty: "&7(vide)"
+  roles-summary: "{count} type(s) actif(s)"
+  previous: "&bPage precedente"
+  next: "&bPage suivante"
+  hint:
+    toggle: "&eClic&b : oui / non"
+    choice: "&eClic gauche&b : suivant\n&eClic droit&b : precedent"
+    number: "&eClic gauche&b : augmenter\n&eClic droit&b : diminuer\n&eMajuscule + clic&b : saisir au clavier"
+    type: "&eClic&b : saisir dans le chat"
+    open: "&eClic&b : ouvrir"
+  types:
+    title: "&8Parametres - types de banques"
+    name: "&f{type}"
+    active: "&aActif"
+    inactive: "&7Inactif"
+    hint: "&eClic&b : activer / desactiver\n&7Un type n'a d'effet que si son plugin est installe"
+  priority:
+    title: "&8Parametres - ordre de choix"
+    rank: "&aChoix n.{rank}"
+    out: "&7Hors ordre de choix"
+    hint: "&eClic&b : ajouter a la fin / retirer"
+  roles:
+    title: "&8Parametres - droits des roles"
+    legend: "&bColonnes 2 a 4 : depot (owner, admin, member)\n&bColonnes 6 a 8 : retrait (owner, admin, member)"
+    deposit: "&fDepot : {role} ({type})"
+    withdraw: "&fRetrait : {role} ({type})"
+    allowed: "&aAutorise"
+    denied: "&cInterdit"
+    hint: "&eClic&b : autoriser / interdire"
+  prompt: "&eTapez la nouvelle valeur de &f{setting}&e dans le chat (&f-&e : vide, &fannuler&e : abandonner)."
+  prompt-secret: "&eTapez le secret &f{setting}&e dans le chat : il ne sera ni affiche ni envoye aux autres joueurs (&fannuler&e : abandonner)."
+  invalid: "&cValeur invalide pour {setting} : {value}"
+  invalid-secret: "&cValeur invalide pour {setting}."
+  secret-denied: "&cPermission novabank.admin.secrets requise pour modifier un secret."
+  edited: "&eBrouillon : {setting} modifie. Enregistrez depuis le menu d'administration."
+  categories:
+    general:
+      name: "&bLangue et serveur"
+      lore: "&7Langue, identite du serveur, remplissage"
+    banks:
+      name: "&bBanques"
+      lore: "&7Types, ordre de choix, valeur, roles"
+    limits:
+      name: "&bLimites et securite"
+      lore: "&7Quantites, delais, sauvegarde"
+    leaderboards:
+      name: "&bClassements"
+      lore: "&7Un bloc par type de banque actif"
+    integrations:
+      name: "&bIntegrations"
+      lore: "&7Niveau d'ile, salon Discord"
+    diagnostics:
+      name: "&bDiagnostics"
+      lore: "&7Debogage et journal"
+    commands:
+      name: "&bCommandes"
+      lore: "&7Noms et alias (au redemarrage)"
+    storage:
+      name: "&bStockage"
+      lore: "&7Type, connexion SQL / MongoDB (au redemarrage)"
+    redis:
+      name: "&bRedis"
+      lore: "&7Synchronisation multi-serveur (au redemarrage)"
+  entries:
+    language:
+      name: "&fLangue"
+      desc: "&7Langue des messages (lang/<code>.yml)"
+    server:
+      id:
+        name: "&fIdentifiant du serveur"
+        desc: "&7Separe les banques de groupes differents"
+      group:
+        name: "&fGroupe de serveurs"
+        desc: "&7Les serveurs d'un meme groupe partagent les banques"
+    gui:
+      filler:
+        name: "&fRemplissage du menu"
+        desc: "&7Item des cases vides de la barre (- : aucun)"
+    banks:
+      entity-types:
+        name: "&fTypes de banques"
+        desc: "&7Banques actives : joueur, ile, ville..."
+      default-priority:
+        name: "&fOrdre de choix"
+        desc: "&7Banque active par defaut d'un joueur"
+      valuation-mode:
+        name: "&fMode de valeur"
+        desc: "&7DERIVED : prix actuel ; ACCUMULATED : prix du depot"
+      undelivered-policy:
+        name: "&fItems non remis"
+        desc: "&7Livraison differee ou retour en banque"
+      roles:
+        name: "&fDroits des roles"
+        desc: "&7Qui depose et qui retire, par type"
+    limits:
+      max-quantity-per-operation:
+        name: "&fQuantite max par operation"
+        desc: "&7Unites au plus par depot ou retrait"
+      cooldown-ms:
+        name: "&fDelai entre operations"
+        desc: "&7En millisecondes, par joueur"
+    security:
+      save-player-data:
+        name: "&fSauvegarde de l'inventaire"
+        desc: "&7Apres chaque operation (anti-duplication)"
+      shutdown-drain-timeout-ms:
+        name: "&fAttente a l'arret"
+        desc: "&7Millisecondes pour finir les operations (0 a 60000)"
+    leaderboards:
+      type:
+        enabled:
+          name: "&fClassement {type}"
+          desc: "&7Active le classement des banques {type}"
+        size:
+          name: "&fTaille ({type})"
+          desc: "&7Nombre d'entrees (1 a 1000)"
+        refresh-seconds:
+          name: "&fRecalcul ({type})"
+          desc: "&7Secondes entre deux recalculs (5 minimum)"
+        per-category:
+          name: "&fPar categorie ({type})"
+          desc: "&7Classements supplementaires par categorie d'item"
+    integrations:
+      superiorskyblock2:
+        island-level:
+          name: "&fNiveau d'ile"
+          desc: "&7Ajoute la valeur de la banque a l'ile (SuperiorSkyblock2)"
+        apply-to:
+          name: "&fBonus applique a"
+          desc: "&7worth : valeur ; level : niveau"
+        multiplier:
+          name: "&fCoefficient"
+          desc: "&7Valeur de la banque x ce nombre"
+      bentobox:
+        island-level:
+          name: "&fNiveau d'ile (BentoBox)"
+          desc: "&7Ajoute la valeur de la banque au niveau (addon Level)"
+        multiplier:
+          name: "&fCoefficient (BentoBox)"
+          desc: "&7Valeur de la banque x ce nombre"
+    discord:
+      enabled:
+        name: "&fDiscord : actif"
+        desc: "&7Annonce les operations dans un salon"
+      mode:
+        name: "&fDiscord : mode"
+        desc: "&7webhook : webhook du salon ; bot : un bot"
+      webhook-url:
+        name: "&fDiscord : adresse du webhook"
+        desc: "&7Parametres du salon > Integrations"
+      bot-token:
+        name: "&fDiscord : jeton du bot"
+        desc: "&7Portail des developpeurs, onglet Bot"
+      channel-id:
+        name: "&fDiscord : salon du bot"
+        desc: "&7Identifiant du salon (nombre)"
+      events:
+        name: "&fDiscord : operations"
+        desc: "&7deposit, withdraw, reset"
+      bank-types:
+        name: "&fDiscord : types de banque"
+        desc: "&7Vide : tous les types"
+      min-quantity:
+        name: "&fDiscord : quantite minimale"
+        desc: "&7Depots et retraits plus petits ignores"
+      batch-seconds:
+        name: "&fDiscord : regroupement"
+        desc: "&7Un message au plus toutes les N secondes"
+    diagnostics:
+      debug:
+        name: "&fMode debogage"
+        desc: "&7Messages detailles dans la console"
+      log-operations:
+        name: "&fJournal des operations"
+        desc: "&7Une ligne par depot et retrait dans la console"
+    commands:
+      player:
+        name:
+          name: "&fCommande des joueurs"
+          desc: "&7Nom de la commande (bank)"
+        aliases:
+          name: "&fAlias des joueurs"
+          desc: "&7Separes par des virgules"
+      admin:
+        name:
+          name: "&fCommande d'administration"
+          desc: "&7Nom de la commande (novabank)"
+        aliases:
+          name: "&fAlias d'administration"
+          desc: "&7Separes par des virgules"
+      hosts:
+        host:
+          name:
+            name: "&fBanque dans {type}"
+            desc: "&7Sous-commande de l'hote (/is, /town, /clan),\n&7ou commande propre (Lands, GriefPrevention, WorldGuard)"
+          aliases:
+            name: "&fAlias dans {type}"
+            desc: "&7Separes par des virgules"
+    storage:
+      type:
+        name: "&fType de stockage"
+        desc: "&7&cLes donnees ne sont PAS copiees : utilisez /novabank migrate"
+      sql:
+        host:
+          name: "&fHote SQL"
+          desc: "&7Adresse du serveur MySQL / MariaDB"
+        port:
+          name: "&fPort SQL"
+          desc: "&71 a 65535"
+        database:
+          name: "&fBase SQL"
+          desc: "&7Nom de la base"
+        username:
+          name: "&fUtilisateur SQL"
+          desc: "&7Compte de connexion"
+        password:
+          name: "&fMot de passe SQL"
+          desc: "&7Secret : jamais affiche ni diffuse"
+        pool:
+          max-size:
+            name: "&fConnexions max"
+            desc: "&7Taille du pool (1 a 100)"
+          min-idle:
+            name: "&fConnexions au repos"
+            desc: "&7Connexions gardees ouvertes"
+          connection-timeout-ms:
+            name: "&fDelai de connexion"
+            desc: "&7Millisecondes (250 minimum)"
+          max-lifetime-ms:
+            name: "&fDuree de vie"
+            desc: "&7Millisecondes (30000 minimum)"
+        options:
+          name: "&fOptions du pilote"
+          desc: "&7cle=valeur;cle=valeur (ex. sslMode=verify-full)"
+      sqlite:
+        file:
+          name: "&fFichier SQLite"
+          desc: "&7Relatif au dossier du plugin"
+      file:
+        directory:
+          name: "&fDossier YAML / JSON"
+          desc: "&7Relatif au dossier du plugin"
+      mongodb:
+        uri:
+          name: "&fURI MongoDB"
+          desc: "&7Secret : peut contenir le mot de passe"
+        database:
+          name: "&fBase MongoDB"
+          desc: "&7Nom de la base"
+        connect-timeout-ms:
+          name: "&fDelai de connexion Mongo"
+          desc: "&7Millisecondes (100 a 300000)"
+        server-selection-timeout-ms:
+          name: "&fDelai de selection Mongo"
+          desc: "&7Millisecondes (100 a 300000)"
+        socket-timeout-ms:
+          name: "&fDelai de lecture Mongo"
+          desc: "&7Millisecondes (100 a 300000)"
+      save-interval-seconds:
+        name: "&fReecriture YAML / JSON"
+        desc: "&7Secondes entre deux reecritures completes"
+      drivers:
+        directory:
+          name: "&fDossier des pilotes"
+          desc: "&7Pilotes telecharges (libs)"
+    redis:
+      enabled:
+        name: "&fRedis actif"
+        desc: "&7Synchronisation entre serveurs"
+      host:
+        name: "&fHote Redis"
+        desc: "&7Adresse du serveur Redis"
+      port:
+        name: "&fPort Redis"
+        desc: "&71 a 65535"
+      password:
+        name: "&fMot de passe Redis"
+        desc: "&7Secret : jamais affiche ni diffuse"
+      database:
+        name: "&fBase Redis"
+        desc: "&7Numero de base"
+      ssl:
+        name: "&fTLS Redis"
+        desc: "&7Connexion chiffree"
+      channel-prefix:
+        name: "&fPrefixe des canaux"
+        desc: "&7Separe plusieurs reseaux sur un meme Redis"
+      connect-timeout-ms:
+        name: "&fDelai de connexion Redis"
+        desc: "&7Millisecondes (100 a 60000)"
+      socket-timeout-ms:
+        name: "&fDelai de lecture Redis"
+        desc: "&7Millisecondes (100 a 60000)"
+      server-name:
+        name: "&fNom du serveur"
+        desc: "&7Affiche par le diagnostic"
+      poll-interval-seconds:
+        name: "&fRelecture de la base"
+        desc: "&7Secondes (1 a 300)"
+      overlap-seconds:
+        name: "&fRecouvrement"
+        desc: "&7Secondes, > ecart d'horloge entre serveurs"
+      deploy-config:
+        name: "&fDeploiement de la config"
+        desc: "&7Envoie les changements faits en jeu aux autres serveurs"
+
+admin:
+  description: "Administration de NovaBank"
+  diagnostic:
+    running: "Diagnostic en cours..."
+    failed: "&cDiagnostic impossible : {cause}"
+    header: "&bDiagnostic"
+    line: "&e - {label} : &f{value}"
+    plugin: "Plugin"
+    server: "Serveur"
+    java: "Java"
+    storage: "Stockage"
+    storage-ok: "&aOK&f (schema v{schema}, {latency} ms)"
+    storage-ko: "&cINACCESSIBLE&f ({error})"
+    driver: "Pilote"
+    driver-info: "{id} {artifact} ({detail})"
+    items: "Items acceptes"
+    warnings: "Avertissements de configuration"
+    io: "Threads IO"
+    io-value: "{threads}/{max} vivants, {active} actif(s), {queued}/{capacity} en file, {completed} tache(s) terminee(s){shutdown}"
+    io-shutdown: ", ARRET DEMANDE"
+    sync: "Synchronisation"
+    sync-off: "desactivee (redis.enabled = false)"
+    sync-value: "{server} | Redis {bus} | base : {poll} | publies {published} (refuses {refused}), recus via Redis {frombus}, via la base {fromstorage}"
+    sync-bus-ok: "&aOK&f ({target})"
+    sync-bus-ko: "&cCOUPE&f ({target} : {error})"
+    sync-poll-ok: "&alecture {at}&f"
+    sync-poll-ko: "&cERREUR&f ({error})"
+    sync-poll-none: "pas encore lue"
+    leaderboard: "Classements"
+    leaderboard-off: "aucun (leaderboards.*.enabled = false)"
+    leaderboard-value: "{entries} | dernier calcul complet : {last} ({took} ms), {refreshes} mise(s) a jour ciblee(s){error}"
+    leaderboard-error: ", &cERREUR : {error}"
+    leaderboard-never: "jamais"
+    components: "Integrations et items custom"
+    errors: "Erreurs recentes"
+    error-line: "&e   {error}"
+    saturated: "executeur IO sature ou arrete"
+  transfer:
+    confirm: "&eTransfert de TOUT le stock de {from} vers {to}. Confirmez avec &f/{label} transfer {from} {to} confirm&e dans les {seconds} s. La banque source reste (vide), rien n'est supprime."
+    no-request: "&cAucun transfert en attente pour {from} vers {to} : tapez d'abord /{label} transfer {from} {to}."
+    done: "&aTransfert termine : {lines} ligne(s), {units} unite(s) (reference {id})."
+    problem: "&c - {problem}"
+    invalid-entity: "&cEntite invalide : {value} (attendu type:identifiant, par exemple island:<uuid>)."
+    same: "&cLa source et la cible sont identiques."
+  config:
+    unknown: "&cCle absente : {path}."
+    value: "&e{path} = {value}"
+    refused: "&cRefuse - {path} : {reason}"
+    saved: "&aConfiguration enregistree : {path} = {value}."
+    deployed: "&aConfiguration diffusee aux autres serveurs (ils sauvegardent leur fichier avant d'appliquer)."
+    pushed: "&aConfiguration envoyee aux autres serveurs (ils sauvegardent leur fichier avant d'appliquer)."
+    push-failed: "&cEnvoi impossible : Redis desactive, indisponible ou redis.deploy-config = false."
+    not-written: "&cNon enregistre ({path}) : {reason}."
+  gui:
+    usage: "&cUtilisation : /{label} gui [save|cancel|reset|rows <2-6>]"
+    player-only: "&cL'editeur de GUI est reserve aux joueurs."
+    closed-hint: "&eBrouillon conserve. &f/{label} gui save&e pour enregistrer et deployer, &f/{label} gui cancel&e pour l'abandonner."
+    saved: "&aDisposition du GUI enregistree (ancien fichier sauvegarde dans backup/)."
+    unchanged: "&eAucun changement a enregistrer."
+    cancelled: "&eBrouillon abandonne."
+    no-draft: "&eAucun brouillon. Ouvrez l'editeur avec /{label} gui."
+    reset: "&eDisposition par defaut placee dans le brouillon (pas encore enregistree)."
+    rows: "&eBrouillon : {rows} lignes (pas encore enregistre)."
+    rows-invalid: "&cNombre de lignes invalide (2 a 6)."
+    refused: "&cRefuse - {reason}"
+    not-reloaded: "&eFichier enregistre mais le rechargement a ete refuse : {errors} erreur(s), voir la console."
+  items:
+    usage: "&cUtilisation : /{label} items [list|add <item|hand> <prix> [categorie]|price <item> <prix>|remove <item>|category <item> <nom|->|name <item> <nom affiche|->|save|cancel]"
+    price-prompt: "&eTapez le nouveau prix dans le chat (ou &fannuler&e)."
+    price-invalid: "&cPrix invalide : {value}"
+    category-prompt: "&eTapez la categorie dans le chat (minuscules, chiffres, '_' ou '-' ; &f-&e pour la retirer, &fannuler&e pour abandonner)."
+    name-prompt: "&eTapez le nom affiche dans le chat (codes couleur admis ; &f-&e pour le retirer, &fannuler&e pour abandonner)."
+    name-invalid: "&cNom invalide : {value}"
+    player-only: "&cL'edition des items est reservee aux joueurs."
+    edited: "&eBrouillon : {summary}. &f/{label} items save&b pour enregistrer et deployer."
+    closed-hint: "&eBrouillon conserve. &f/{label} items save&e pour enregistrer et deployer, &f/{label} items cancel&e pour l'abandonner."
+    list-header: "&bItems du brouillon ({count}) :"
+    list-line: "&e{item} &f= {value}"
+    list-more: "&e... et {more} autres."
+    unknown-item: "&cItem absent du brouillon : {item}."
+    invalid-item: "&cItem invalide : {value} (ex. minecraft:stone ou itemsadder:pack/ruby)."
+    invalid-price: "&cPrix invalide : {value} (nombre positif ou nul)."
+    invalid-category: "&cCategorie invalide : {value} (minuscules, chiffres, '_' ou '-')."
+    hand-empty: "&cTenez un item en main."
+    saved: "&aItems enregistres (ancien fichier sauvegarde dans backup/)."
+    unchanged: "&eAucun changement a enregistrer."
+    cancelled: "&eBrouillon abandonne."
+    no-draft: "&eAucun brouillon. Ouvrez l'editeur avec /{label} items."
+    refused: "&cRefuse - {reason}"
+  hub:
+    player-only: "&cLe menu d'administration est reserve aux joueurs."
+    closed-hint: "&eChangements non enregistres. Rouvrez avec &f/{label} admin&e pour les enregistrer ou les abandonner."
+    saved: "&aChangements enregistres (ancien fichier sauvegarde dans backup/)."
+    nothing: "&eRien a enregistrer."
+    cancelled: "&eChangements abandonnes."
+    refused: "&cRefuse - {reason}"
+  resync:
+    started: "&a{count} ile(s) en cours de resynchronisation avec leur banque (SuperiorSkyblock2)."
+    unavailable: "&eRien a resynchroniser : le niveau d'ile SuperiorSkyblock2 n'est pas branche (plugin absent ou integrations.superiorskyblock2.island-level desactive)."
+  discord:
+    sending: "&7Envoi d'un message d'essai dans le salon Discord..."
+    disabled: "&eLe salon Discord est desactive : mettez discord.enabled a true puis rechargez."
+    ok: "&aMessage d'essai recu par Discord : le salon est bien relie."
+    refused: "&cDiscord refuse le message (HTTP {status}) : {hint}"
+    unreachable: "&cDiscord injoignable : {error}"
+    hint:
+      unauthorized: "jeton du bot invalide (discord.bot-token)."
+      forbidden: "le bot n'a pas le droit d'ecrire dans ce salon (Voir le salon, Envoyer des messages, Integrer des liens)."
+      not-found: "webhook supprime ou salon introuvable (discord.webhook-url ou discord.channel-id)."
+      rate-limited: "trop de messages, reessayez dans quelques secondes."
+      other: "verifiez discord.mode, discord.webhook-url ou discord.bot-token et discord.channel-id."
+  reload:
+    running: "Rechargement de config.yml..."
+    refused: "&cRechargement refuse : {errors} erreur(s). La configuration precedente reste en vigueur."
+    applied: "&aConfiguration rechargee : {items} item(s) accepte(s), {warnings} avertissement(s)."
+    restart-required: "&eStockage, commandes ou politique de retrait modifies : redemarrage necessaire pour les appliquer."
+  syntax:
+    bank: "/{label} bank <joueur>"
+    reset: "/{label} reset <joueur> [confirm]"
+    history: "/{label} history <joueur> [page]"
+    migrate: "/{label} migrate <yaml|json|sqlite|mysql|mariadb|mongodb> [confirm]"
+    config: "/{label} config <get <chemin>|set <chemin> <valeur>|push>"
+    transfer: "/{label} transfer <type:id> <type:id> [confirm]"
+  bank:
+    header: "&bBanque de {player} &b({bank})"
+    missing: "&eCette banque n'a encore jamais servi."
+  reset:
+    confirm: "&eReset de la valeur de la banque de {player} (stock conserve). Confirmez avec &f/{label} reset {player} confirm&e dans les {seconds} s."
+    no-request: "&cAucun reset en attente de confirmation pour {player} : tapez d'abord /{label} reset {player}."
+    done: "&aValeur de la banque de {player} reinitialisee : {value} effaces, stock conserve."
+    missing: "&cLa banque de {player} n'existe pas encore."
+    failed: "&cReset refuse ({reason})."
+  history:
+    header: "&bHistorique de {player} &b- page {page}"
+    line: "&e{date} &f{type} &b{item} &fx{quantity} &b({value}) {state}"
+    empty: "&eAucune operation."
+    next: "&ePage suivante : &f/{label} history {player} {next}"
+    type:
+      deposit: "Depot"
+      withdraw: "Retrait"
+      reset: "Reset"
+    state:
+      reserved: "&e[en cours]"
+      committed: ""
+      returned: "&e[annule]"
+  migrate:
+    unknown-type: "&cType de stockage inconnu : {type}. Types : {types}."
+    refused:
+      same-type: "&cLe stockage actif est deja {type} : rien a migrer."
+      sql-username-missing: "&cstorage.sql.username est vide : configurez la base {type} dans config.yml avant de migrer."
+      redis-enabled: "&cRedis est active : {type} ne sert qu'un seul serveur, migration refusee."
+    confirm: "&eMigration de {source} vers {type} : tout le contenu sera copie dans la cible (qui doit etre vide) et NovaBank passera en maintenance. Confirmez avec &f/{label} migrate {argument} confirm&e dans les {seconds} s."
+    no-request: "&cAucune migration vers {type} en attente de confirmation : tapez d'abord /{label} migrate {argument}."
+    busy: "&cUne migration est deja en cours ou terminee : redemarrez le serveur."
+    started: "&eMigration de {source} vers {type} lancee : NovaBank est en maintenance, progression dans la console."
+    done: "&aMigration terminee et verifiee ({summary}). Mettez storage.type: {type} dans config.yml puis redemarrez le serveur ; NovaBank reste en maintenance jusque-la."
+    failed: "&cMigration en echec : {reason}. Le stockage actif ({source}) n'a pas ete modifie, la maintenance est levee."
+
+# Salon Discord (section discord de config.yml) : Markdown de Discord admis, sans codes couleur.
+discord:
+  deposit: "**{player}** a depose {items} dans la banque {bank} (+{value})"
+  withdraw: "**{player}** a retire {items} de la banque {bank} (-{value})"
+  reset: "Valeur de la banque {bank} remise a zero (stock conserve)"
+  item: "**{quantity} x {item}**"
+  unknown-player: "Le serveur"
+  test: "Message d'essai de NovaBank : ce salon recevra les depots et retraits."

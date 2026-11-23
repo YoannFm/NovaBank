@@ -1,0 +1,14 @@
+protection:
+  flags:
+    NOVABANK_DEPOSIT:
+      name: "Bank: deposit"
+      description: "<green>Minimum rank to deposit items</green>\n<green>into the island bank (NovaBank).</green>"
+      hint: "Island bank deposit denied"
+    NOVABANK_WITHDRAW:
+      name: "Bank: withdraw"
+      description: "<green>Minimum rank to withdraw items</green>\n<green>from the island bank (NovaBank).</green>"
+      hint: "Island bank withdrawal denied"
+novabank:
+  commands:
+    bank:
+      description: "Island item bank (NovaBank)"

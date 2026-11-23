@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>dev.novadev.novabank</groupId>
+    <artifactId>novabank-parent</artifactId>
+    <version>2026.11.23 (1.0.0 #1)</version>
+    <packaging>pom</packaging>
+
+    <name>NovaBank</name>
+    <description>Plugin Minecraft de banque de blocs - POM parent (versions et configuration communes).</description>
+
+    <modules>
+        <module>novabank-api</module>
+        <module>novabank-core</module>
+        <module>novabank-config</module>
+        <module>novabank-storage-sql</module>
+        <module>novabank-storage-mongo</module>
+        <module>novabank-storage-file</module>
+        <module>novabank-sync-redis</module>
+        <module>novabank-libraries</module>
+        <module>novabank-bukkit</module>
+        <module>novabank-platform-folia</module>
+        <module>novabank-plugin</module>
+        <module>novabank-host-superiorskyblock</module>
+        <module>novabank-host-bentobox</module>
+        <module>novabank-host-iridium</module>
+        <module>novabank-host-simpleclans</module>
+        <module>novabank-host-lands</module>
+        <module>novabank-editions</module>
+    </modules>
+
+    <properties>
+        <!-- Version en deux morceaux : <version> ci-dessus doit valoir "date (numero)" (verifie par l'enforcer, le
+             build echoue sinon). Les noms de fichier des JAR en derivent, sans espace, parenthese ni # (SuperiorSkyblock2
+             lit ses modules par une URL ou # coupe le chemin). -->
+        <release.date>2026.11.23</release.date>
+        <release.number>1.0.0</release.number>
+        <!-- Numero de build : version "date (numero #build)", fichiers "date-numero-buildN" (jamais de # dans un nom). -->
+        <release.build>1</release.build>
+        <file.version>${release.date}-${release.number}-build${release.build}</file.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- Bytecode cible (decision D7) : Java 17 pour api/core/bukkit. -->
+        <maven.compiler.release>17</maven.compiler.release>
+
+        <!-- Prerequis de l'outillage de build (verifies par l'enforcer). -->
+        <build.maven.min>3.9</build.maven.min>
+        <build.java.min>25</build.java.min>
+
+        <!-- API serveur Minecraft. -->
+        <spigot-api.version>1.17.1-R0.1-SNAPSHOT</spigot-api.version>
+        <!-- API Folia (module novabank-platform-folia uniquement) : plus ancienne version publiee,
+             1.19.4, qui fixe la version minimale de Folia supportee et reste en bytecode Java 17. -->
+        <folia-api.version>1.19.4-R0.1-SNAPSHOT</folia-api.version>
+        <!-- SnakeYAML tire par spigot-api 1.17.1 : impose dans novabank-bukkit pour que
+             YamlConfiguration fonctionne dans les tests (la 2.x de novabank-config est incompatible). -->
+        <snakeyaml-bukkit.version>1.28</snakeyaml-bukkit.version>
+        <!-- Gson tire par spigot-api 1.17.1 (version embarquee par le serveur le plus ancien supporte) :
+             novabank-storage-file compile contre elle (provided, fournie par le serveur). -->
+        <gson-bukkit.version>2.8.0</gson-bukkit.version>
+        <!-- Versions recentes contre lesquelles novabank-storage-file est AUSSI teste (serveurs 1.18+ et
+             26.x : API SnakeYAML 2.x). Telechargees par maven-dependency-plugin, jamais embarquees. -->
+        <snakeyaml-recent.version>2.7</snakeyaml-recent.version>
+        <gson-recent.version>2.10</gson-recent.version>
+        <!-- Annotations de nullite utilisees par spigot-api (provided dans son POM, donc non transitives) :
+             sans elles, javac avertit "Cannot find annotation method" et -Werror echoue. -->
+        <jetbrains-annotations.version>21.0.1</jetbrains-annotations.version>
+
+        <!-- Stockage SQL : pool de connexions (compile, sera shade et relocalise a l'assemblage).
+             HikariCP 7.x est compile en bytecode Java 11, compatible avec la cible Java 17. -->
+        <hikaricp.version>7.1.0</hikaricp.version>
+        <!-- Version de slf4j-api tiree par HikariCP (alignee pour slf4j-nop de test). -->
+        <slf4j.version>2.0.17</slf4j.version>
+        <!-- Pilote SQLite : tests uniquement. En production, les pilotes sont telecharges
+             au demarrage (decision D6) et fournis au module sous forme de java.sql.Driver.
+             Doit rester egale a la version epinglee dans DriverCatalog (novabank-libraries),
+             verifie par DriverCatalogTest. -->
+        <sqlite-jdbc.version>3.53.4.0</sqlite-jdbc.version>
+        <!-- Pilote MariaDB (MariaDB et MySQL) : tests uniquement, meme regle que sqlite-jdbc
+             (version egale a celle de DriverCatalog, verifie par un test de novabank-bukkit). -->
+        <mariadb-java-client.version>3.5.11</mariadb-java-client.version>
+
+        <!-- Pilote MongoDB synchrone : compile (provided) et teste dans novabank-storage-mongo,
+             jamais embarque. En production, telecharge au demarrage (D6/D18) ; doit rester egale a
+             ModuleCatalog.MONGODB_DRIVER_VERSION (novabank-libraries), verifie par un test. -->
+        <mongodb-driver.version>5.13.0</mongodb-driver.version>
+
+        <!-- Dependances de test. -->
+        <junit.version>5.14.4</junit.version>
+        <assertj.version>3.27.7</assertj.version>
+        <mockito.version>5.24.0</mockito.version>
+        <archunit.version>1.5.1</archunit.version>
+        <!-- Tests de novabank-config uniquement (lecture du config.yml par defaut).
+             En production, le YAML est lu par la plateforme (YamlConfiguration de Bukkit). -->
+        <snakeyaml.version>2.7</snakeyaml.version>
+
+        <!-- Plugins Maven. -->
+        <maven-clean-plugin.version>3.5.0</maven-clean-plugin.version>
+        <maven-resources-plugin.version>3.5.0</maven-resources-plugin.version>
+        <maven-compiler-plugin.version>3.16.0</maven-compiler-plugin.version>
+        <maven-surefire-plugin.version>3.6.0</maven-surefire-plugin.version>
+        <maven-jar-plugin.version>3.5.1</maven-jar-plugin.version>
+        <maven-shade-plugin.version>3.6.2</maven-shade-plugin.version>
+        <maven-install-plugin.version>3.2.0</maven-install-plugin.version>
+        <maven-deploy-plugin.version>3.2.0</maven-deploy-plugin.version>
+        <maven-site-plugin.version>3.22.0</maven-site-plugin.version>
+        <maven-dependency-plugin.version>3.11.0</maven-dependency-plugin.version>
+        <maven-antrun-plugin.version>3.1.0</maven-antrun-plugin.version>
+        <maven-enforcer-plugin.version>3.6.3</maven-enforcer-plugin.version>
+        <jacoco-maven-plugin.version>0.8.15</jacoco-maven-plugin.version>
+    </properties>
+
+    <!-- Maven Central est redeclare en premier : sinon les depots ci-dessous passent
+         avant lui et servent aussi les dependances non Minecraft (papermc fait proxy). -->
+    <repositories>
+        <repository>
+            <id>central</id>
+            <url>https://repo.maven.apache.org/maven2</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>placeholderapi</id>
+            <url>https://repo.helpch.at/releases/</url>
+        </repository>
+        <repository>
+            <id>papermc</id>
+            <url>https://repo.papermc.io/repository/maven-public/</url>
+        </repository>
+        <repository>
+            <id>spigot-snapshots</id>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>dev.novadev.novabank</groupId>
+                <artifactId>novabank-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dev.novadev.novabank</groupId>
+                <artifactId>novabank-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dev.novadev.novabank</groupId>
+                <artifactId>novabank-core</artifactId>
+                <version>${project.version}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>dev.novadev.novabank</groupId>
+                <artifactId>novabank-config</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dev.novadev.novabank</groupId>
+                <artifactId>novabank-storage-sql</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dev.novadev.novabank</groupId>
+                <artifactId>novabank-storage-mongo</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dev.novadev.novabank</groupId>
+                <artifactId>novabank-storage-file</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dev.novadev.novabank</groupId>
+                <artifactId>novabank-sync-redis</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dev.novadev.novabank</groupId>
+                <artifactId>novabank-libraries</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dev.novadev.novabank</groupId>
+                <artifactId>novabank-bukkit</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dev.novadev.novabank</groupId>
+                <artifactId>novabank-platform-folia</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zaxxer</groupId>
+                <artifactId>HikariCP</artifactId>
+                <version>${hikaricp.version}</version>
+            </dependency>
+            <!-- Fournisseur slf4j embarque (relocalise) dans le JAR du plugin : les logs de
+                 HikariCP vont vers java.util.logging, donc vers la console du serveur. -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-jdk14</artifactId>
+                <version>${slf4j.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-nop</artifactId>
+                <version>${slf4j.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.xerial</groupId>
+                <artifactId>sqlite-jdbc</artifactId>
+                <version>${sqlite-jdbc.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mariadb.jdbc</groupId>
+                <artifactId>mariadb-java-client</artifactId>
+                <version>${mariadb-java-client.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mongodb</groupId>
+                <artifactId>mongodb-driver-sync</artifactId>
+                <version>${mongodb-driver.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>${gson-bukkit.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.spigotmc</groupId>
+                <artifactId>spigot-api</artifactId>
+                <version>${spigot-api.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>dev.folia</groupId>
+                <artifactId>folia-api</artifactId>
+                <version>${folia-api.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains</groupId>
+                <artifactId>annotations-java5</artifactId>
+                <version>${jetbrains-annotations.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.junit</groupId>
+                <artifactId>junit-bom</artifactId>
+                <version>${junit.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <version>${assertj.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-bom</artifactId>
+                <version>${mockito.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.tngtech.archunit</groupId>
+                <artifactId>archunit-junit5</artifactId>
+                <version>${archunit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>${snakeyaml.version}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <!-- Noms de fichier sans espace ni # pour tous les modules (voir file.version). -->
+        <finalName>${project.artifactId}-${file.version}</finalName>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>${maven-clean-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${maven-resources-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin.version}</version>
+                    <configuration>
+                        <!-- release vient de la propriete maven.compiler.release. -->
+                        <showWarnings>true</showWarnings>
+                        <compilerArgs>
+                            <arg>-Xlint:all</arg>
+                            <arg>-Werror</arg>
+                        </compilerArgs>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven-surefire-plugin.version}</version>
+                    <!-- JUnit 5 : le fournisseur junit-platform est detecte via junit-jupiter
+                         sur le classpath de test. Ne pas definir argLine ici : JaCoCo l'alimente. -->
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>${maven-jar-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-shade-plugin</artifactId>
+                    <version>${maven-shade-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>${maven-install-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>${maven-deploy-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>${maven-site-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>${maven-dependency-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>${maven-antrun-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>${maven-enforcer-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>${jacoco-maven-plugin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>enforce-build-environment</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireMavenVersion>
+                                    <version>[${build.maven.min},)</version>
+                                </requireMavenVersion>
+                                <requireJavaVersion>
+                                    <version>[${build.java.min},)</version>
+                                </requireJavaVersion>
+                                <dependencyConvergence/>
+                                <banDuplicatePomDependencyVersions/>
+                                <requireProperty>
+                                    <property>project.version</property>
+                                    <regex>\Q${release.date} (${release.number} #${release.build})\E</regex>
+                                    <regexMessage>&lt;version&gt; et release.date / release.number / release.build du pom parent ne concordent pas : changez-les ensemble.</regexMessage>
+                                </requireProperty>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>jacoco-prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <!-- Rapport de couverture seulement ; aucun seuil bloquant pour l'instant. -->
+                        <id>jacoco-report</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

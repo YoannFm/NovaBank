@@ -1,0 +1,7 @@
+name: NovaBank
+main: dev.novadev.novabank.host.bentobox.NovaBankAddon
+version: '${project.version}'
+icon: CHEST
+api-version: 3.0.0
+authors: YoannFM
+softdepend: AcidIsland, BSkyBlock, CaveBlock, SkyGrid, AOneBlock, Boxed

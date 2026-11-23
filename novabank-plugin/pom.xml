@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>dev.novadev.novabank</groupId>
+        <artifactId>novabank-parent</artifactId>
+        <version>2026.11.23 (1.0.0 #1)</version>
+    </parent>
+
+    <artifactId>novabank-plugin</artifactId>
+    <name>NovaBank Plugin</name>
+    <description>Assemblage du JAR final du plugin : modules NovaBank (dont le planificateur Folia) + HikariCP et slf4j relocalises, plugin.yml, config.yml par defaut.</description>
+
+    <properties>
+        <!-- Prefixe des bibliotheques embarquees et relocalisees. -->
+        <relocation.prefix>dev.novadev.novabank.libs</relocation.prefix>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>dev.novadev.novabank</groupId>
+            <artifactId>novabank-bukkit</artifactId>
+        </dependency>
+        <!-- Planificateur Folia, charge par son nom uniquement sous Folia. -->
+        <dependency>
+            <groupId>dev.novadev.novabank</groupId>
+            <artifactId>novabank-platform-folia</artifactId>
+        </dependency>
+        <!-- Module MongoDB (D18) : jamais shade (scope provided, exclu du shade) ; son jar (produit
+             dans ../novabank-storage-mongo/target) est copie comme RESSOURCE backends/mongodb.jar avec
+             sa somme SHA-256 (voir plus bas). La dependance impose l'ordre du reacteur. -->
+        <dependency>
+            <groupId>dev.novadev.novabank</groupId>
+            <artifactId>novabank-storage-mongo</artifactId>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+        <!-- Fournisseur slf4j relocalise avec slf4j-api : HikariCP journalise via java.util.logging,
+             donc dans la console du serveur, sans dependre du slf4j (present ou non) du serveur. -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jdk14</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+            <!-- Licence MIT : sa notice doit accompagner chaque copie du JAR. -->
+            <resource>
+                <directory>${project.basedir}/..</directory>
+                <includes>
+                    <include>LICENSE</include>
+                </includes>
+            </resource>
+        </resources>
+        <plugins>
+            <!-- Modules embarques (D18) : le jar du module devient la ressource backends/mongodb.jar du
+                 plugin, avec sa somme SHA-256 calculee au build (backends/mongodb.jar.sha256), verifiee a
+                 l'extraction et a chaque demarrage par novabank-libraries (EmbeddedModules). Copie par
+                 Ant (reecriture du fichier en place) : le dossier du projet interdit la suppression,
+                 donc le remplacement par maven-dependency-plugin. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>embed-backend-modules</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <mkdir dir="${project.build.outputDirectory}/backends"/>
+                                <copy file="${project.basedir}/../novabank-storage-mongo/target/novabank-storage-mongo-${file.version}.jar"
+                                      tofile="${project.build.outputDirectory}/backends/mongodb.jar"
+                                      overwrite="true" preservelastmodified="false"/>
+                                <checksum file="${project.build.outputDirectory}/backends/mongodb.jar"
+                                          algorithm="SHA-256" fileext=".sha256" forceOverwrite="yes"/>
+                            </target>
+                        </configuration>
+                    </execution>
+                    <!-- Controle du JAR final : le module et son pilote ne sont jamais a plat (D6/D18), le
+                         module est bien present comme ressource avec sa somme. -->
+                    <execution>
+                        <id>check-embedded-modules</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <property name="final.jar" value="${project.build.directory}/NovaBank-${file.version}.jar"/>
+                                <fail message="JAR final : classes MongoDB (pilote ou module) a plat interdites">
+                                    <condition>
+                                        <resourcecount when="greater" count="0">
+                                            <zipfileset src="${final.jar}"
+                                                        includes="com/mongodb/**,org/bson/**,dev/novadev/novabank/storage/mongo/**"/>
+                                        </resourcecount>
+                                    </condition>
+                                </fail>
+                                <fail message="JAR final : Gson ou SnakeYAML embarques (ils sont fournis par le serveur)">
+                                    <condition>
+                                        <resourcecount when="greater" count="0">
+                                            <zipfileset src="${final.jar}" includes="com/google/gson/**,org/yaml/**"/>
+                                        </resourcecount>
+                                    </condition>
+                                </fail>
+                                <fail message="JAR final : stockage fichier (YAML/JSON) absent">
+                                    <condition>
+                                        <resourcecount when="equal" count="0">
+                                            <zipfileset src="${final.jar}"
+                                                        includes="dev/novadev/novabank/storage/file/FileStorage.class"/>
+                                        </resourcecount>
+                                    </condition>
+                                </fail>
+                                <fail message="JAR final : backends/mongodb.jar ou sa somme absent">
+                                    <condition>
+                                        <not>
+                                            <resourcecount when="equal" count="2">
+                                                <zipfileset src="${final.jar}"
+                                                            includes="backends/mongodb.jar,backends/mongodb.jar.sha256"/>
+                                            </resourcecount>
+                                        </not>
+                                    </condition>
+                                </fail>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <!-- Fichier distinct de l'artefact principal : sans clean, un shade qui remplacerait
+                                 l'artefact principal re-shaderait au build suivant son propre resultat
+                                 (classes perimees, ressources en double). -->
+                            <outputFile>${project.build.directory}/NovaBank-${file.version}.jar</outputFile>
+                            <!-- Liste blanche : rien d'autre n'entre dans le JAR (ni API serveur, ni pilote BDD,
+                                 telecharges au demarrage selon la decision D6). -->
+                            <artifactSet>
+                                <includes>
+                                    <include>dev.novadev.novabank:*</include>
+                                    <include>com.zaxxer:HikariCP</include>
+                                    <include>org.slf4j:slf4j-api</include>
+                                    <include>org.slf4j:slf4j-jdk14</include>
+                                </includes>
+                            </artifactSet>
+                            <relocations>
+                                <relocation>
+                                    <pattern>com.zaxxer.hikari</pattern>
+                                    <shadedPattern>${relocation.prefix}.hikari</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>org.slf4j</pattern>
+                                    <shadedPattern>${relocation.prefix}.slf4j</shadedPattern>
+                                </relocation>
+                            </relocations>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <!-- Signatures et descripteurs des dependances : invalides apres relocation. -->
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                        <exclude>META-INF/*.EC</exclude>
+                                        <exclude>META-INF/maven/**</exclude>
+                                        <exclude>module-info.class</exclude>
+                                        <exclude>META-INF/versions/*/module-info.class</exclude>
+                                    </excludes>
+                                </filter>
+                                <!-- Manifestes des dependances : seul celui du plugin est conserve. -->
+                                <filter>
+                                    <artifact>dev.novadev.novabank:novabank-*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/MANIFEST.MF</exclude>
+                                    </excludes>
+                                </filter>
+                                <filter>
+                                    <artifact>com.zaxxer:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/MANIFEST.MF</exclude>
+                                    </excludes>
+                                </filter>
+                                <filter>
+                                    <artifact>org.slf4j:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/MANIFEST.MF</exclude>
+                                    </excludes>
+                                </filter>
+                                <!-- Licence MIT identique a celle de slf4j-api, conservee une seule fois. -->
+                                <filter>
+                                    <artifact>org.slf4j:slf4j-jdk14</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/LICENSE.txt</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                            <transformers>
+                                <!-- Relocalise le nom et le contenu de META-INF/services (fournisseur slf4j). -->
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                                <!-- Manifeste unique, propre au plugin (ceux des dependances sont filtres). -->
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <manifestEntries>
+                                        <Implementation-Title>NovaBank</Implementation-Title>
+                                        <Implementation-Version>${project.version}</Implementation-Version>
+                                        <Implementation-Vendor>NovaDev</Implementation-Vendor>
+                                    </manifestEntries>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
